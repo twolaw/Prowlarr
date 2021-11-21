@@ -1,8 +1,8 @@
-const prowlarrOrange = '#27c24c';
+const prowlarrOrange = '#e66000';
 
 module.exports = {
-  textColor: '#515253',
-  defaultColor: '#333',
+  textColor: '#ccc',
+  defaultColor: '#ccc',
   disabledColor: '#999',
   dimColor: '#555',
   black: '#000',
@@ -10,7 +10,7 @@ module.exports = {
   offWhite: '#f5f7fa',
   primaryColor: '#5d9cec',
   selectedColor: '#f9be03',
-  successColor: '#27c24c',
+  successColor: '#00853d',
   dangerColor: '#f05050',
   warningColor: '#ffa500',
   infoColor: '#5d9cec',
@@ -30,14 +30,16 @@ module.exports = {
   themeRed: '#c4273c',
   themeDarkColor: '#595959',
   themeLightColor: '#707070',
+  pageBackground: '#454545',
+  pageFooterBackgroud: 'rgba(0, 0, 0, .25)',
 
   torrentColor: '#00853d',
   usenetColor: '#17b1d9',
 
   // Links
   defaultLinkHoverColor: '#fff',
-  linkColor: '#5d9cec',
-  linkHoverColor: '#1b72e2',
+  linkColor: '#rgb(230, 96, 0)',
+  linkHoverColor: '#rgb(230, 96, 0, .8)',
 
   // Sidebar
 
@@ -68,6 +70,7 @@ module.exports = {
   //
   // Buttons
 
+  defaultButtonTextColor: '#333',
   defaultBackgroundColor: '#fff',
   defaultBorderColor: '#eaeaea',
   defaultHoverBackgroundColor: '#f5f5f5',
@@ -101,14 +104,14 @@ module.exports = {
   // Modal
 
   modalBackdropBackgroundColor: 'rgba(0, 0, 0, 0.6)',
-  modalBackgroundColor: '#fff',
+  modalBackgroundColor: '#454545',
   modalCloseButtonHoverColor: '#888',
 
   //
   // Menu
   menuItemColor: '#e1e2e3',
-  menuItemHoverColor: '#fbfcfc',
-  menuItemHoverBackgroundColor: '#f5f7fa',
+  menuItemHoverColor: '#e66000',
+  menuItemHoverBackgroundColor: '#606060',
 
   //
   // Toolbar
@@ -119,14 +122,15 @@ module.exports = {
   //
   // Scroller
 
-  scrollbarBackgroundColor: '#9ea4b9',
-  scrollbarHoverBackgroundColor: '#656d8c',
+  scrollbarBackgroundColor: '#707070',
+  scrollbarHoverBackgroundColor: '#606060',
 
   //
   // Card
 
-  cardShadowColor: '#e1e1e1',
-  cardAlternateBackgroundColor: '#f5f5f5',
+  cardBackgroundColor: 'rgba(0, 0, 0, .45)',
+  cardShadowColor: '#000000',
+  cardAlternateBackgroundColor: 'rgba(0, 0, 0, .30)',
 
   //
   // Alert
@@ -155,6 +159,8 @@ module.exports = {
   //
   // Form
 
+  inputBackgroundColor: '#606060',
+  inputHoverBackgroundColor: 'rgba(255, 255, 255, 0.20)',
   advancedFormLabelColor: '#ff902b',
   disabledCheckInputColor: '#ddd',
 
@@ -172,16 +178,9 @@ module.exports = {
   popoverArrowBorderInverseColor: 'rgba(58, 63, 81, 0.75)',
 
   //
-  // Calendar
-
-  calendarTodayBackgroundColor: '#ddd',
-  calendarBorderColor: '#cecece',
-  calendarTextDim: '#666',
-
-  //
   // Table
 
-  tableRowHoverBackgroundColor: '#fafbfc',
+  tableRowHoverBackgroundColor: 'rgba(255, 255, 255, 0.08)',
 
   //
   // Charts
