@@ -1,7 +1,7 @@
 import Chart from 'chart.js/auto';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import colors from 'Styles/Variables/colors';
+import colors from 'Styles/Themes/light';
 
 class StackedBarChart extends Component {
   constructor(props) {

@@ -2,7 +2,7 @@ import Chart from 'chart.js/auto';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { kinds } from 'Helpers/Props';
-import colors from 'Styles/Variables/colors';
+import colors from 'Styles/Themes/light';
 
 function getColors(kind) {
 

@@ -30,6 +30,8 @@ module.exports = {
   themeRed: '#c4273c',
   themeDarkColor: '#595959',
   themeLightColor: '#707070',
+  pageBackground: '#f5f7fa',
+  pageFooterBackgroud: '#f1f1f1',
 
   torrentColor: '#00853d',
   usenetColor: '#17b1d9',
@@ -68,6 +70,7 @@ module.exports = {
   //
   // Buttons
 
+  defaultButtonTextColor: '#333',
   defaultBackgroundColor: '#fff',
   defaultBorderColor: '#eaeaea',
   defaultHoverBackgroundColor: '#f5f5f5',
@@ -125,6 +128,7 @@ module.exports = {
   //
   // Card
 
+  cardBackgroundColor: '#fff',
   cardShadowColor: '#e1e1e1',
   cardAlternateBackgroundColor: '#f5f5f5',
 
@@ -155,6 +159,8 @@ module.exports = {
   //
   // Form
 
+  inputBackgroundColor: '#fff',
+  inputHoverBackgroundColor: '#f8f8f8',
   advancedFormLabelColor: '#ff902b',
   disabledCheckInputColor: '#ddd',
 
@@ -170,13 +176,6 @@ module.exports = {
   popoverTitleBorderInverseColor: '#707070',
   popoverShadowInverseColor: 'rgba(0, 0, 0, 0.2)',
   popoverArrowBorderInverseColor: 'rgba(58, 63, 81, 0.75)',
-
-  //
-  // Calendar
-
-  calendarTodayBackgroundColor: '#ddd',
-  calendarBorderColor: '#cecece',
-  calendarTextDim: '#666',
 
   //
   // Table
