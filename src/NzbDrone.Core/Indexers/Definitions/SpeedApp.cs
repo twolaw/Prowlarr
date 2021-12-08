@@ -114,7 +114,7 @@ namespace NzbDrone.Core.Indexers.Definitions
 
         protected override void ModifyRequest(IndexerRequest request)
         {
-            request.HttpRequest.Headers.Set("Authorization", $"Bearer {Settings.ApiKey}");
+            request.HttpRequest.Headers.Add("Authorization", $"Bearer {Settings.ApiKey}");
         }
 
         public override async Task<byte[]> Download(Uri link)
@@ -136,7 +136,7 @@ namespace NzbDrone.Core.Indexers.Definitions
 
             var request = requestBuilder.Build();
             request.AllowAutoRedirect = FollowRedirect;
-            request.Headers.Set("Authorization", $"Bearer {Settings.ApiKey}");
+            request.Headers.Add("Authorization", $"Bearer {Settings.ApiKey}");
 
             byte[] torrentData;
 
@@ -340,7 +340,7 @@ namespace NzbDrone.Core.Indexers.Definitions
 
             var request = new IndexerRequest(searchUrl, HttpAccept.Json);
 
-            request.HttpRequest.Headers.Set("Authorization", $"Bearer {Settings.ApiKey}");
+            request.HttpRequest.Headers.Add("Authorization", $"Bearer {Settings.ApiKey}");
 
             yield return request;
         }

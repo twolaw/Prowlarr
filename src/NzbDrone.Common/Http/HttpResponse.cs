@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 using NzbDrone.Common.Extensions;
 using NzbDrone.Common.Serializer;
@@ -70,7 +72,7 @@ namespace NzbDrone.Common.Http
         {
             get
             {
-                var newUrl = Headers["Location"];
+                var newUrl = Headers.GetSingleValue("Location");
                 if (newUrl == null)
                 {
                     return string.Empty;
@@ -82,7 +84,7 @@ namespace NzbDrone.Common.Http
 
         public string[] GetCookieHeaders()
         {
-            return Headers.GetValues("Set-Cookie") ?? Array.Empty<string>();
+            return Headers.TryGetValues("Set-Cookie", out var cookies) ? cookies.ToArray() : Array.Empty<string>();
         }
 
         public Dictionary<string, string> GetCookies()

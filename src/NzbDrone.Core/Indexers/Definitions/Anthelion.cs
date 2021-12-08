@@ -71,12 +71,7 @@ namespace NzbDrone.Core.Indexers.Definitions
                 .SetHeader("Content-Type", "multipart/form-data")
                 .Build();
 
-            var headers = new NameValueCollection
-            {
-                { "Referer", LoginUrl }
-            };
-
-            authLoginRequest.Headers.Add(headers);
+            authLoginRequest.Headers.Add("Referer", LoginUrl);
 
             var response = await ExecuteAuth(authLoginRequest);
 

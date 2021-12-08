@@ -25,42 +25,46 @@ namespace NzbDrone.Common.Http
         }
     }
 
-    public class HttpHeader : NameValueCollection, IEnumerable<KeyValuePair<string, string>>, IEnumerable
+    public class HttpHeader : HttpHeaders
     {
-        public HttpHeader(NameValueCollection headers)
-            : base(headers)
+        public HttpHeader(HttpHeader headers)
         {
-        }
-
-        public HttpHeader(HttpHeaders headers)
-            : base(headers.ToNameValueCollection())
-        {
+            foreach (var key in headers)
+            {
+                Add(key.Key, key.Value);
+            }
         }
 
         public HttpHeader()
         {
         }
 
+        public void AddMany(HttpHeaders headers)
+        {
+            foreach (var key in headers)
+            {
+                Add(key.Key, key.Value);
+            }
+        }
+
         public bool ContainsKey(string key)
         {
-            key = key.ToLowerInvariant();
-            return AllKeys.Any(v => v.ToLowerInvariant() == key);
+            return Contains(key);
         }
 
         public string GetSingleValue(string key)
         {
-            var values = GetValues(key);
-            if (values == null || values.Length == 0)
+            if (!TryGetValues(key, out var values))
             {
                 return null;
             }
 
-            if (values.Length > 1)
+            if (values.Count() > 1)
             {
                 throw new ApplicationException($"Expected {key} to occur only once, but was {values.Join("|")}.");
             }
 
-            return values[0];
+            return values.Single();
         }
 
         protected T? GetSingleValue<T>(string key, Func<string, T> converter)
@@ -83,7 +87,7 @@ namespace NzbDrone.Common.Http
             }
             else
             {
-                Set(key, value);
+                Add(key, value);
             }
         }
 
@@ -96,11 +100,11 @@ namespace NzbDrone.Common.Http
             }
             else if (converter != null)
             {
-                Set(key, converter(value.Value));
+                Add(key, converter(value.Value));
             }
             else
             {
-                Set(key, value.Value.ToString());
+                Add(key, value.Value.ToString());
             }
         }
 
@@ -150,16 +154,6 @@ namespace NzbDrone.Common.Http
             {
                 SetSingleValue("Accept", value);
             }
-        }
-
-        public new IEnumerator<KeyValuePair<string, string>> GetEnumerator()
-        {
-            return AllKeys.SelectMany(GetValues, (k, c) => new KeyValuePair<string, string>(k, c)).ToList().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return base.GetEnumerator();
         }
 
         public Encoding GetEncodingFromContentType()

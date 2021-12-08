@@ -79,7 +79,7 @@ namespace NzbDrone.Core.Indexers.Definitions.Avistaz
 
         protected override void ModifyRequest(IndexerRequest request)
         {
-            request.HttpRequest.Headers.Set("Authorization", $"Bearer {Settings.Token}");
+            request.HttpRequest.Headers.Add("Authorization", $"Bearer {Settings.Token}");
             base.ModifyRequest(request);
         }
 

@@ -112,7 +112,7 @@ namespace NzbDrone.Common.Http
         {
             var authInfo = Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes($"{username}:{password}"));
 
-            Headers.Set("Authorization", "Basic " + authInfo);
+            Headers.Add("Authorization", "Basic " + authInfo);
         }
     }
 }

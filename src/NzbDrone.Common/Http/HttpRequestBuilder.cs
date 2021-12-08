@@ -121,12 +121,12 @@ namespace NzbDrone.Common.Http
             {
                 var authInfo = NetworkCredential.UserName + ":" + NetworkCredential.Password;
                 authInfo = Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(authInfo));
-                request.Headers.Set("Authorization", "Basic " + authInfo);
+                request.Headers.Add("Authorization", "Basic " + authInfo);
             }
 
             foreach (var header in Headers)
             {
-                request.Headers.Set(header.Key, header.Value);
+                request.Headers.Add(header.Key, header.Value);
             }
 
             foreach (var cookie in Cookies)
@@ -293,7 +293,7 @@ namespace NzbDrone.Common.Http
 
         public virtual HttpRequestBuilder SetHeader(string name, string value)
         {
-            Headers.Set(name, value);
+            Headers.Add(name, value);
 
             return this;
         }
@@ -302,7 +302,7 @@ namespace NzbDrone.Common.Http
         {
             foreach (var header in headers)
             {
-                Headers.Set(header.Key, header.Value);
+                Headers.Add(header.Key, header.Value);
             }
 
             return this;

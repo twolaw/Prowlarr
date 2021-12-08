@@ -164,14 +164,9 @@ namespace NzbDrone.Core.Indexers.Definitions
 
             searchUrl += "?" + queryCollection.GetQueryString();
 
-            var extraHeaders = new NameValueCollection
-            {
-                { "X-Requested-With", "XMLHttpRequest" },
-                { "Referer", searchUrlReferer }
-            };
-
             var request = new IndexerRequest(searchUrl, null);
-            request.HttpRequest.Headers.Add(extraHeaders);
+            request.HttpRequest.Headers.Add("X-Requested-With", "XMLHttpRequest");
+            request.HttpRequest.Headers.Add("Referer", searchUrlReferer);
 
             yield return request;
         }

@@ -189,13 +189,9 @@ namespace NzbDrone.Core.Indexers.Definitions
                     { "showposts", "1" },
                     { "catlist[]", "0" }
                 };
-                var headers = new NameValueCollection
-                {
-                    { "Content-Type", "application/x-www-form-urlencoded" }
-                };
 
                 request.HttpRequest.SetContent(postData.GetQueryString());
-                request.HttpRequest.Headers.Add(headers);
+                request.HttpRequest.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
             }
 
             yield return request;

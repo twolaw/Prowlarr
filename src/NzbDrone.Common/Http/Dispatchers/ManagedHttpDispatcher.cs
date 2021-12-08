@@ -1,8 +1,10 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Security;
 using System.Net.Sockets;
 using System.Threading;
@@ -122,13 +124,15 @@ namespace NzbDrone.Common.Http.Dispatchers
                 }
             }
 
-            var headers = responseMessage.Headers.ToNameValueCollection();
+            var headers = new HttpHeader();
 
-            headers.Add(responseMessage.Content.Headers.ToNameValueCollection());
+            headers.AddMany(responseMessage.Headers);
+
+            headers.AddMany(responseMessage.Content.Headers);
 
             sw.Stop();
 
-            return new HttpResponse(request, new HttpHeader(headers), data, sw.ElapsedMilliseconds, responseMessage.StatusCode);
+            return new HttpResponse(request, headers, data, sw.ElapsedMilliseconds, responseMessage.StatusCode);
         }
 
         protected virtual System.Net.Http.HttpClient GetClient(HttpUri uri)
@@ -175,46 +179,46 @@ namespace NzbDrone.Common.Http.Dispatchers
                 switch (header.Key)
                 {
                     case "Accept":
-                        webRequest.Headers.Accept.ParseAdd(header.Value);
+                        webRequest.Headers.Accept.ParseAdd(header.Value.First());
                         break;
                     case "Connection":
                         webRequest.Headers.Connection.Clear();
-                        webRequest.Headers.Connection.Add(header.Value);
+                        webRequest.Headers.Connection.Add(header.Value.First());
                         break;
                     case "Content-Length":
-                        AddContentHeader(webRequest, "Content-Length", header.Value);
+                        AddContentHeader(webRequest, "Content-Length", header.Value.First());
                         break;
                     case "Content-Type":
-                        AddContentHeader(webRequest, "Content-Type", header.Value);
+                        AddContentHeader(webRequest, "Content-Type", header.Value.First());
                         break;
                     case "Date":
                         webRequest.Headers.Remove("Date");
-                        webRequest.Headers.Date = HttpHeader.ParseDateTime(header.Value);
+                        webRequest.Headers.Date = HttpHeader.ParseDateTime(header.Value.First());
                         break;
                     case "Expect":
-                        webRequest.Headers.Expect.ParseAdd(header.Value);
+                        webRequest.Headers.Expect.ParseAdd(header.Value.First());
                         break;
                     case "Host":
-                        webRequest.Headers.Host = header.Value;
+                        webRequest.Headers.Host = header.Value.First();
                         break;
                     case "If-Modified-Since":
-                        webRequest.Headers.IfModifiedSince = HttpHeader.ParseDateTime(header.Value);
+                        webRequest.Headers.IfModifiedSince = HttpHeader.ParseDateTime(header.Value.First());
                         break;
                     case "Range":
                         throw new NotImplementedException();
                     case "Referer":
-                        webRequest.Headers.Add("Referer", header.Value);
+                        webRequest.Headers.Add("Referer", header.Value.First());
                         break;
                     case "Transfer-Encoding":
-                        webRequest.Headers.TransferEncoding.ParseAdd(header.Value);
+                        webRequest.Headers.TransferEncoding.ParseAdd(header.Value.First());
                         break;
                     case "User-Agent":
-                        webRequest.Headers.UserAgent.ParseAdd(header.Value);
+                        webRequest.Headers.UserAgent.ParseAdd(header.Value.First());
                         break;
                     case "Proxy-Connection":
                         throw new NotImplementedException();
                     default:
-                        webRequest.Headers.Add(header.Key, header.Value);
+                        webRequest.Headers.Add(header.Key, header.Value.First());
                         break;
                 }
             }

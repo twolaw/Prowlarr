@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace NzbDrone.Common.Http
 {
@@ -11,7 +11,7 @@ namespace NzbDrone.Common.Http
         {
             if (response.Headers.ContainsKey("Retry-After"))
             {
-                var retryAfter = response.Headers["Retry-After"].ToString();
+                var retryAfter = response.Headers.GetSingleValue("Retry-After").ToString();
                 int seconds;
                 DateTime date;
 

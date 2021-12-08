@@ -42,8 +42,8 @@ namespace NzbDrone.Core.Indexers.PassThePopcorn
                     $"{Settings.BaseUrl.Trim().TrimEnd('/')}/torrents.php?action=advanced&json=noredirect&searchstr={searchParameters}",
                     HttpAccept.Json);
 
-            request.HttpRequest.Headers["ApiUser"] = Settings.APIUser;
-            request.HttpRequest.Headers["ApiKey"] = Settings.APIKey;
+            request.HttpRequest.Headers.Add("ApiUser", Settings.APIUser);
+            request.HttpRequest.Headers.Add("ApiKey", Settings.APIKey);
 
             if (Settings.APIKey.IsNullOrWhiteSpace())
             {

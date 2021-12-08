@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
@@ -16,25 +16,21 @@ namespace NzbDrone.Common.Test.Http
         [TestCase("text/html; charset=utf-8", "utf-8")]
         public void should_get_encoding_from_content_type_header(string contentType, string charsetExpected)
         {
-            var headers = new NameValueCollection();
+            var headers = new HttpHeader();
 
             headers.Add("Content-Type", contentType);
 
-            var httpheader = new HttpHeader(headers);
-
-            httpheader.GetEncodingFromContentType().Should().Be(Encoding.GetEncoding(charsetExpected));
+            headers.GetEncodingFromContentType().Should().Be(Encoding.GetEncoding(charsetExpected));
         }
 
         [TestCase("text/html; charset=asdasd")]
         public void should_throw_when_invalid_encoding_is_in_content_type_header(string contentType)
         {
-            var headers = new NameValueCollection();
+            var headers = new HttpHeader();
 
             headers.Add("Content-Type", contentType);
 
-            var httpheader = new HttpHeader(headers);
-
-            Action action = () => httpheader.GetEncodingFromContentType();
+            Action action = () => headers.GetEncodingFromContentType();
             action.Should().Throw<ArgumentException>();
         }
 
