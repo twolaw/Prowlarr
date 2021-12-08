@@ -32,7 +32,7 @@ namespace NzbDrone.Core.Test.HealthCheck.Checks
 
             Mocker.GetMock<IHttpClient>()
                   .Setup(s => s.Execute(It.IsAny<HttpRequest>()))
-                  .Returns<HttpRequest>(r => new HttpResponse(r, new HttpHeader(), new CookieCollection(), Encoding.ASCII.GetBytes(json)));
+                  .Returns<HttpRequest>(r => new HttpResponse(r, new HttpHeader(), Encoding.ASCII.GetBytes(json)));
         }
 
         [Test]

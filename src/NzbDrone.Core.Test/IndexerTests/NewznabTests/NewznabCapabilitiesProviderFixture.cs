@@ -44,7 +44,7 @@ namespace NzbDrone.Core.Test.IndexerTests.NewznabTests
         {
             Mocker.GetMock<IIndexerHttpClient>()
                 .Setup(o => o.ExecuteProxied(It.IsAny<HttpRequest>(), It.IsAny<IndexerDefinition>()))
-                .Returns<HttpRequest, IndexerDefinition>((r, d) => new HttpResponse(r, new HttpHeader(), new CookieCollection(), caps));
+                .Returns<HttpRequest, IndexerDefinition>((r, d) => new HttpResponse(r, new HttpHeader(), caps));
         }
 
         [Test]

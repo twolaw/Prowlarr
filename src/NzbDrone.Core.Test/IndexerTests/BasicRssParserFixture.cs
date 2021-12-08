@@ -41,7 +41,7 @@ namespace NzbDrone.Core.Test.IndexerTests
         private IndexerResponse CreateResponse(string url, string content)
         {
             var httpRequest = new HttpRequest(url);
-            var httpResponse = new HttpResponse(httpRequest, new HttpHeader(), new CookieCollection(), Encoding.UTF8.GetBytes(content));
+            var httpResponse = new HttpResponse(httpRequest, new HttpHeader(), Encoding.UTF8.GetBytes(content));
 
             return new IndexerResponse(new IndexerRequest(httpRequest), httpResponse);
         }

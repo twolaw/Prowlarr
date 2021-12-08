@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
@@ -37,12 +38,12 @@ namespace NzbDrone.Core.Test.IndexerTests.PTPTests
             var responseJson = ReadAllText(fileName);
 
             Mocker.GetMock<IIndexerHttpClient>()
-                  .Setup(o => o.ExecuteProxiedAsync(It.Is<HttpRequest>(v => v.Method == HttpMethod.POST), Subject.Definition))
-                  .Returns<HttpRequest, IndexerDefinition>((r, d) => Task.FromResult(new HttpResponse(r, new HttpHeader(), new CookieCollection(), authStream.ToString())));
+                  .Setup(o => o.ExecuteProxiedAsync(It.Is<HttpRequest>(v => v.Method == HttpMethod.Post), Subject.Definition))
+                  .Returns<HttpRequest, IndexerDefinition>((r, d) => Task.FromResult(new HttpResponse(r, new HttpHeader(), authStream.ToString())));
 
             Mocker.GetMock<IIndexerHttpClient>()
-                .Setup(o => o.ExecuteProxiedAsync(It.Is<HttpRequest>(v => v.Method == HttpMethod.GET), Subject.Definition))
-                  .Returns<HttpRequest, IndexerDefinition>((r, d) => Task.FromResult(new HttpResponse(r, new HttpHeader { ContentType = HttpAccept.Json.Value }, new CookieCollection(), responseJson)));
+                .Setup(o => o.ExecuteProxiedAsync(It.Is<HttpRequest>(v => v.Method == HttpMethod.Get), Subject.Definition))
+                  .Returns<HttpRequest, IndexerDefinition>((r, d) => Task.FromResult(new HttpResponse(r, new HttpHeader { ContentType = HttpAccept.Json.Value }, responseJson)));
 
             var torrents = (await Subject.Fetch(new MovieSearchCriteria())).Releases;
 

@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using NLog;
 using NzbDrone.Common.Cache;
@@ -87,7 +89,7 @@ namespace NzbDrone.Common.Http
                     // 302 or 303 should default to GET on redirect even if POST on original
                     if (response.StatusCode == HttpStatusCode.Redirect || response.StatusCode == HttpStatusCode.RedirectMethod)
                     {
-                        request.Method = HttpMethod.GET;
+                        request.Method = HttpMethod.Get;
                         request.ContentData = null;
                     }
 
@@ -101,9 +103,12 @@ namespace NzbDrone.Common.Http
                 _logger.Error("Server requested a redirect to [{0}] while in developer mode. Update the request URL to avoid this redirect.", response.Headers["Location"]);
             }
 
-            if (!request.SuppressHttpError && response.HasHttpError)
+            if (!request.SuppressHttpError && response.HasHttpError && (request.SuppressHttpErrorStatusCodes == null || !request.SuppressHttpErrorStatusCodes.Contains(response.StatusCode)))
             {
-                _logger.Warn("HTTP Error - {0}", response);
+                if (request.LogHttpError)
+                {
+                    _logger.Warn("HTTP Error - {0}", response);
+                }
 
                 if ((int)response.StatusCode == 429)
                 {
@@ -138,8 +143,6 @@ namespace NzbDrone.Common.Http
             _logger.Trace(request);
 
             var stopWatch = Stopwatch.StartNew();
-
-            PrepareRequestCookies(request, cookieContainer);
 
             var response = await _httpDispatcher.GetResponseAsync(request, cookieContainer);
 
@@ -207,27 +210,20 @@ namespace NzbDrone.Common.Http
             }
         }
 
-        private void PrepareRequestCookies(HttpRequest request, CookieContainer cookieContainer)
-        {
-            // Don't collect persistnet cookies for intermediate/redirected urls.
-            /*lock (_cookieContainerCache)
-            {
-                var presistentContainer = _cookieContainerCache.Get("container", () => new CookieContainer());
-                var persistentCookies = presistentContainer.GetCookies((Uri)request.Url);
-                var existingCookies = cookieContainer.GetCookies((Uri)request.Url);
-
-                cookieContainer.Add(persistentCookies);
-                cookieContainer.Add(existingCookies);
-            }*/
-        }
-
         private void HandleResponseCookies(HttpResponse response, CookieContainer cookieContainer)
         {
+            foreach (Cookie cookie in cookieContainer.GetAllCookies())
+            {
+                cookie.Expired = true;
+            }
+
             var cookieHeaders = response.GetCookieHeaders();
             if (cookieHeaders.Empty())
             {
                 return;
             }
+
+            AddCookiesToContainer(response.Request.Url, cookieHeaders, cookieContainer);
 
             if (response.Request.StoreResponseCookie)
             {
@@ -235,24 +231,71 @@ namespace NzbDrone.Common.Http
                 {
                     var persistentCookieContainer = _cookieContainerCache.Get("container", () => new CookieContainer());
 
-                    foreach (var cookieHeader in cookieHeaders)
-                    {
-                        try
-                        {
-                            persistentCookieContainer.SetCookies((Uri)response.Request.Url, cookieHeader);
-                        }
-                        catch (Exception ex)
-                        {
-                            _logger.Debug(ex, "Invalid cookie in {0}", response.Request.Url);
-                        }
-                    }
+                    AddCookiesToContainer(response.Request.Url, cookieHeaders, persistentCookieContainer);
+                }
+            }
+        }
+
+        private void AddCookiesToContainer(HttpUri url, string[] cookieHeaders, CookieContainer container)
+        {
+            foreach (var cookieHeader in cookieHeaders)
+            {
+                try
+                {
+                    container.SetCookies((Uri)url, cookieHeader);
+                }
+                catch (Exception ex)
+                {
+                    _logger.Debug(ex, "Invalid cookie in {0}", url);
                 }
             }
         }
 
         public async Task DownloadFileAsync(string url, string fileName)
         {
-            await _httpDispatcher.DownloadFileAsync(url, fileName);
+            var fileNamePart = fileName + ".part";
+
+            try
+            {
+                var fileInfo = new FileInfo(fileName);
+                if (fileInfo.Directory != null && !fileInfo.Directory.Exists)
+                {
+                    fileInfo.Directory.Create();
+                }
+
+                _logger.Debug("Downloading [{0}] to [{1}]", url, fileName);
+
+                var stopWatch = Stopwatch.StartNew();
+                using (var fileStream = new FileStream(fileNamePart, FileMode.Create, FileAccess.ReadWrite))
+                {
+                    var request = new HttpRequest(url);
+                    request.AllowAutoRedirect = true;
+                    request.ResponseStream = fileStream;
+                    var response = await GetAsync(request);
+
+                    if (response.Headers.ContentType != null && response.Headers.ContentType.Contains("text/html"))
+                    {
+                        throw new HttpException(request, response, "Site responded with html content.");
+                    }
+                }
+
+                stopWatch.Stop();
+
+                if (File.Exists(fileName))
+                {
+                    File.Delete(fileName);
+                }
+
+                File.Move(fileNamePart, fileName);
+                _logger.Debug("Downloading Completed. took {0:0}s", stopWatch.Elapsed.Seconds);
+            }
+            finally
+            {
+                if (File.Exists(fileNamePart))
+                {
+                    File.Delete(fileNamePart);
+                }
+            }
         }
 
         public void DownloadFile(string url, string fileName)
@@ -263,7 +306,7 @@ namespace NzbDrone.Common.Http
 
         public Task<HttpResponse> GetAsync(HttpRequest request)
         {
-            request.Method = HttpMethod.GET;
+            request.Method = HttpMethod.Get;
             return ExecuteAsync(request);
         }
 
@@ -288,7 +331,7 @@ namespace NzbDrone.Common.Http
 
         public Task<HttpResponse> HeadAsync(HttpRequest request)
         {
-            request.Method = HttpMethod.HEAD;
+            request.Method = HttpMethod.Head;
             return ExecuteAsync(request);
         }
 
@@ -299,7 +342,7 @@ namespace NzbDrone.Common.Http
 
         public Task<HttpResponse> PostAsync(HttpRequest request)
         {
-            request.Method = HttpMethod.POST;
+            request.Method = HttpMethod.Post;
             return ExecuteAsync(request);
         }
 
