@@ -6,8 +6,9 @@ using NzbDrone.Core.Messaging.Events;
 
 namespace NzbDrone.Core.Indexers.Definitions.UNIT3D
 {
-    public abstract class Unit3dBase : TorrentIndexerBase<Unit3dSettings>
+    public class Unit3dBase : TorrentIndexerBase<Unit3dSettings>
     {
+        public override string Name => "Unit3d";
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
         public override string[] IndexerUrls => new string[] { "" };
         public override bool SupportsRss => true;

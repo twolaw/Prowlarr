@@ -51,6 +51,10 @@ namespace NzbDrone.Core.Datastore.Migration
                         {
                             implementation = "Avistaz";
                         }
+                        else if (configContract == "Unit3dSettings")
+                        {
+                            implementation = "Unit3d";
+                        }
 
                         using (var updateCmd = conn.CreateCommand())
                         {
