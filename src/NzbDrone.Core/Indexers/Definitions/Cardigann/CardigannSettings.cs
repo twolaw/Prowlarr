@@ -21,9 +21,6 @@ namespace NzbDrone.Core.Indexers.Cardigann
             ExtraFieldData = new Dictionary<string, object>();
         }
 
-        [FieldDefinition(0, Hidden = HiddenType.Hidden)]
-        public string DefinitionFile { get; set; }
-
         [FieldDefinition(2, Label = "Base Url", Type = FieldType.Select, SelectOptionsProviderAction = "getUrls", HelpText = "Select which baseurl Prowlarr will use for requests to the site")]
         public string BaseUrl { get; set; }
 

@@ -15,7 +15,7 @@ namespace Prowlarr.Api.V1.Indexers
     public class IndexerResource : ProviderResource<IndexerResource>
     {
         public string[] IndexerUrls { get; set; }
-        public string DefinitionName { get; set; }
+        public string DefinitionFile { get; set; }
         public string Description { get; set; }
         public string Language { get; set; }
         public string Encoding { get; set; }
@@ -52,8 +52,6 @@ namespace Prowlarr.Api.V1.Indexers
 
             var resource = base.ToResource(definition);
 
-            resource.DefinitionName = definition.ImplementationName;
-
             var infoLinkName = definition.ImplementationName;
 
             if (definition.Implementation == typeof(Cardigann).Name)
@@ -74,10 +72,10 @@ namespace Prowlarr.Api.V1.Indexers
                     }
                 }
 
-                resource.DefinitionName = settings.DefinitionFile;
-                infoLinkName = settings.DefinitionFile;
+                infoLinkName = definition.DefinitionFile;
             }
 
+            resource.DefinitionFile = definition.DefinitionFile ?? definition.ImplementationName;
             resource.InfoLink = string.Format("https://wiki.servarr.com/prowlarr/supported-indexers#{0}", infoLinkName.ToLower().Replace(' ', '-'));
             resource.AppProfileId = definition.AppProfileId;
             resource.IndexerUrls = definition.IndexerUrls;
@@ -107,6 +105,7 @@ namespace Prowlarr.Api.V1.Indexers
             }
 
             var definition = base.ToModel(resource);
+            definition.DefinitionFile = resource.DefinitionFile;
 
             if (resource.Implementation == typeof(Cardigann).Name)
             {
@@ -114,7 +113,7 @@ namespace Prowlarr.Api.V1.Indexers
 
                 var settings = (CardigannSettings)definition.Settings;
 
-                var cardigannDefinition = _definitionService.GetCachedDefinition(settings.DefinitionFile);
+                var cardigannDefinition = _definitionService.GetCachedDefinition(definition.DefinitionFile);
 
                 foreach (var field in resource.Fields)
                 {
