@@ -17,23 +17,5 @@ namespace NzbDrone.Core.Indexers.Definitions
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)
         {
         }
-
-        protected override IndexerCapabilities SetCapabilities()
-        {
-            var caps = new IndexerCapabilities
-            {
-            };
-
-            caps.Categories.AddCategoryMapping(1, NewznabStandardCategory.PCMac, "MacOS Apps");
-            caps.Categories.AddCategoryMapping(2, NewznabStandardCategory.PCMac, "MacOS Games");
-            caps.Categories.AddCategoryMapping(3, NewznabStandardCategory.PCMobileiOS, "iOS Apps");
-            caps.Categories.AddCategoryMapping(4, NewznabStandardCategory.PCMobileiOS, "iOS Games");
-            caps.Categories.AddCategoryMapping(5, NewznabStandardCategory.Other, "Graphics");
-            caps.Categories.AddCategoryMapping(6, NewznabStandardCategory.Audio, "Audio");
-            caps.Categories.AddCategoryMapping(7, NewznabStandardCategory.Other, "Tutorials");
-            caps.Categories.AddCategoryMapping(8, NewznabStandardCategory.Other, "Other");
-
-            return caps;
-        }
     }
 }

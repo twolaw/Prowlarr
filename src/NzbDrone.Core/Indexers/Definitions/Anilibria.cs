@@ -28,7 +28,6 @@ namespace NzbDrone.Core.Indexers.Definitions
         public override Encoding Encoding => Encoding.UTF8;
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
         public override IndexerPrivacy Privacy => IndexerPrivacy.Public;
-        public override IndexerCapabilities Capabilities => SetCapabilities();
 
         public Anilibria(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)
@@ -43,26 +42,6 @@ namespace NzbDrone.Core.Indexers.Definitions
         public override IParseIndexerResponse GetParser()
         {
             return new AnilibriaParser(Settings, Capabilities.Categories);
-        }
-
-        private IndexerCapabilities SetCapabilities()
-        {
-            var caps = new IndexerCapabilities
-            {
-                TvSearchParams = new List<TvSearchParam>
-                                   {
-                                       TvSearchParam.Q, TvSearchParam.Season, TvSearchParam.Ep
-                                   },
-                MovieSearchParams = new List<MovieSearchParam>
-                                   {
-                                       MovieSearchParam.Q
-                                   }
-            };
-            caps.Categories.AddCategoryMapping(1, NewznabStandardCategory.TVAnime, "ТВ");
-            caps.Categories.AddCategoryMapping(3, NewznabStandardCategory.TVAnime, "ONA");
-            caps.Categories.AddCategoryMapping(4, NewznabStandardCategory.TVAnime, "OVA");
-            caps.Categories.AddCategoryMapping(5, NewznabStandardCategory.Movies, "Фильм");
-            return caps;
         }
     }
 

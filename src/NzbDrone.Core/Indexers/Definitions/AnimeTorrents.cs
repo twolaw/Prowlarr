@@ -31,7 +31,6 @@ namespace NzbDrone.Core.Indexers.Definitions
         private string LoginUrl => Settings.BaseUrl + "login.php";
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
         public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
-        public override IndexerCapabilities Capabilities => SetCapabilities();
 
         public AnimeTorrents(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)
@@ -93,43 +92,6 @@ namespace NzbDrone.Core.Indexers.Definitions
             }
 
             return false;
-        }
-
-        private IndexerCapabilities SetCapabilities()
-        {
-            var caps = new IndexerCapabilities
-            {
-                TvSearchParams = new List<TvSearchParam>
-                       {
-                           TvSearchParam.Q, TvSearchParam.Season, TvSearchParam.Ep
-                       },
-                MovieSearchParams = new List<MovieSearchParam>
-                       {
-                           MovieSearchParam.Q
-                       }
-            };
-
-            caps.Categories.AddCategoryMapping(1, NewznabStandardCategory.MoviesSD, "Anime Movie");
-            caps.Categories.AddCategoryMapping(6, NewznabStandardCategory.MoviesHD, "Anime Movie HD");
-            caps.Categories.AddCategoryMapping(2, NewznabStandardCategory.TVAnime, "Anime Series");
-            caps.Categories.AddCategoryMapping(7, NewznabStandardCategory.TVAnime, "Anime Series HD");
-            caps.Categories.AddCategoryMapping(5, NewznabStandardCategory.XXXDVD, "Hentai (censored)");
-            caps.Categories.AddCategoryMapping(9, NewznabStandardCategory.XXXDVD, "Hentai (censored) HD");
-            caps.Categories.AddCategoryMapping(4, NewznabStandardCategory.XXXDVD, "Hentai (un-censored)");
-            caps.Categories.AddCategoryMapping(8, NewznabStandardCategory.XXXDVD, "Hentai (un-censored) HD");
-            caps.Categories.AddCategoryMapping(13, NewznabStandardCategory.BooksForeign, "Light Novel");
-            caps.Categories.AddCategoryMapping(3, NewznabStandardCategory.BooksComics, "Manga");
-            caps.Categories.AddCategoryMapping(10, NewznabStandardCategory.BooksComics, "Manga 18+");
-            caps.Categories.AddCategoryMapping(11, NewznabStandardCategory.TVAnime, "OVA");
-            caps.Categories.AddCategoryMapping(12, NewznabStandardCategory.TVAnime, "OVA HD");
-            caps.Categories.AddCategoryMapping(14, NewznabStandardCategory.BooksComics, "Doujin Anime");
-            caps.Categories.AddCategoryMapping(15, NewznabStandardCategory.XXXDVD, "Doujin Anime 18+");
-            caps.Categories.AddCategoryMapping(16, NewznabStandardCategory.AudioForeign, "Doujin Music");
-            caps.Categories.AddCategoryMapping(17, NewznabStandardCategory.BooksComics, "Doujinshi");
-            caps.Categories.AddCategoryMapping(18, NewznabStandardCategory.BooksComics, "Doujinshi 18+");
-            caps.Categories.AddCategoryMapping(19, NewznabStandardCategory.Audio, "OST");
-
-            return caps;
         }
     }
 

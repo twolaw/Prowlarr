@@ -19,7 +19,7 @@ namespace NzbDrone.Core.Indexers.Definitions.Avistaz
         public override bool SupportsRss => true;
         public override bool SupportsSearch => true;
         public override int PageSize => 50;
-        public override IndexerCapabilities Capabilities => SetCapabilities();
+
         private IIndexerRepository _indexerRepository;
 
         public AvistazBase(IIndexerRepository indexerRepository,

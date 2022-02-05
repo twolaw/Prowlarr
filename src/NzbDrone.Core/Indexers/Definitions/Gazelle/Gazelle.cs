@@ -17,7 +17,6 @@ namespace NzbDrone.Core.Indexers.Gazelle
         public override bool SupportsRss => true;
         public override bool SupportsSearch => true;
         public override int PageSize => 50;
-        public override IndexerCapabilities Capabilities => SetCapabilities();
 
         public Gazelle(IIndexerHttpClient httpClient,
                        IEventAggregator eventAggregator,
@@ -43,13 +42,6 @@ namespace NzbDrone.Core.Indexers.Gazelle
         public override IParseIndexerResponse GetParser()
         {
             return new GazelleParser(Settings, Capabilities);
-        }
-
-        protected virtual IndexerCapabilities SetCapabilities()
-        {
-            var caps = new IndexerCapabilities();
-
-            return caps;
         }
 
         protected override async Task DoLogin()

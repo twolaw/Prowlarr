@@ -31,7 +31,6 @@ namespace NzbDrone.Core.Indexers.Definitions
         public override Encoding Encoding => Encoding.GetEncoding("iso-8859-1");
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
         public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
-        public override IndexerCapabilities Capabilities => SetCapabilities();
 
         public BitHDTV(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)
@@ -56,35 +55,6 @@ namespace NzbDrone.Core.Indexers.Definitions
         protected override bool CheckIfLoginNeeded(HttpResponse httpResponse)
         {
             return false;
-        }
-
-        private IndexerCapabilities SetCapabilities()
-        {
-            var caps = new IndexerCapabilities
-            {
-                TvSearchParams = new List<TvSearchParam>
-                                   {
-                                       TvSearchParam.Q, TvSearchParam.Season, TvSearchParam.Ep, TvSearchParam.ImdbId
-                                   },
-                MovieSearchParams = new List<MovieSearchParam>
-                                   {
-                                       MovieSearchParam.Q, MovieSearchParam.ImdbId
-                                   }
-            };
-
-            caps.Categories.AddCategoryMapping(1, NewznabStandardCategory.TVAnime, "Anime");
-            caps.Categories.AddCategoryMapping(2, NewznabStandardCategory.MoviesBluRay, "Movies/Blu-ray");
-            caps.Categories.AddCategoryMapping(4, NewznabStandardCategory.TVDocumentary, "Documentaries");
-            caps.Categories.AddCategoryMapping(6, NewznabStandardCategory.AudioLossless, "HQ Audio");
-            caps.Categories.AddCategoryMapping(7, NewznabStandardCategory.Movies, "Movies");
-            caps.Categories.AddCategoryMapping(8, NewznabStandardCategory.AudioVideo, "Music Videos");
-            caps.Categories.AddCategoryMapping(9, NewznabStandardCategory.Other, "Other");
-            caps.Categories.AddCategoryMapping(5, NewznabStandardCategory.TVSport, "Sports");
-            caps.Categories.AddCategoryMapping(10, NewznabStandardCategory.TV, "TV");
-            caps.Categories.AddCategoryMapping(12, NewznabStandardCategory.TV, "TV/Seasonpack");
-            caps.Categories.AddCategoryMapping(11, NewznabStandardCategory.XXX, "XXX");
-
-            return caps;
         }
     }
 

@@ -31,8 +31,6 @@ namespace NzbDrone.Core.Indexers.Definitions
 
         public override IndexerPrivacy Privacy => IndexerPrivacy.Public;
 
-        public override IndexerCapabilities Capabilities => SetCapabilities();
-
         public override bool FollowRedirect => true;
 
         public InternetArchive(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
@@ -48,46 +46,6 @@ namespace NzbDrone.Core.Indexers.Definitions
         public override IIndexerRequestGenerator GetRequestGenerator()
         {
             return new InternetArchiveRequestGenerator() { Settings = Settings, Capabilities = Capabilities };
-        }
-
-        private IndexerCapabilities SetCapabilities()
-        {
-            var caps = new IndexerCapabilities
-            {
-                TvSearchParams = new List<TvSearchParam>
-                {
-                    TvSearchParam.Q
-                },
-                MovieSearchParams = new List<MovieSearchParam>
-                {
-                    MovieSearchParam.Q
-                },
-                BookSearchParams = new List<BookSearchParam>
-                {
-                    BookSearchParam.Q
-                },
-                MusicSearchParams = new List<MusicSearchParam>
-                {
-                    MusicSearchParam.Q
-                }
-            };
-
-            // c.f. https://archive.org/services/docs/api/metadata-schema/index.html?highlight=mediatype#mediatype
-            // "Movies" is a catch all category for videos
-            caps.Categories.AddCategoryMapping("texts", NewznabStandardCategory.Books);
-            caps.Categories.AddCategoryMapping("etree", NewznabStandardCategory.Audio);
-            caps.Categories.AddCategoryMapping("audio", NewznabStandardCategory.Audio);
-            caps.Categories.AddCategoryMapping("movies", NewznabStandardCategory.Movies);
-            caps.Categories.AddCategoryMapping("movies", NewznabStandardCategory.TV);
-            caps.Categories.AddCategoryMapping("software", NewznabStandardCategory.PC);
-            caps.Categories.AddCategoryMapping("image", NewznabStandardCategory.OtherMisc);
-            caps.Categories.AddCategoryMapping("data", NewznabStandardCategory.Other);
-            caps.Categories.AddCategoryMapping("web", NewznabStandardCategory.Other);
-            caps.Categories.AddCategoryMapping("collection", NewznabStandardCategory.Other);
-            caps.Categories.AddCategoryMapping("account", NewznabStandardCategory.Other);
-
-            caps.Categories.AddCategoryMapping("other", NewznabStandardCategory.Other);
-            return caps;
         }
     }
 

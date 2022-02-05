@@ -32,7 +32,6 @@ namespace NzbDrone.Core.Indexers.Definitions
         private string LoginUrl => Settings.BaseUrl + "user/account/login/";
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
         public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
-        public override IndexerCapabilities Capabilities => SetCapabilities();
 
         public TorrentLeech(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)
@@ -84,86 +83,6 @@ namespace NzbDrone.Core.Indexers.Definitions
             }
 
             return false;
-        }
-
-        private IndexerCapabilities SetCapabilities()
-        {
-            var caps = new IndexerCapabilities
-            {
-                TvSearchParams = new List<TvSearchParam>
-                                   {
-                                       // Torrentleech does technically support ImdbId Search but only with no other params
-                                       // ImdbId + S/E search returns unrelated results
-                                       TvSearchParam.Q, TvSearchParam.Season, TvSearchParam.Ep
-                                   },
-                MovieSearchParams = new List<MovieSearchParam>
-                                   {
-                                       MovieSearchParam.Q, MovieSearchParam.ImdbId
-                                   },
-                MusicSearchParams = new List<MusicSearchParam>
-                                   {
-                                       MusicSearchParam.Q
-                                   },
-                BookSearchParams = new List<BookSearchParam>
-                                   {
-                                       BookSearchParam.Q
-                                   }
-            };
-
-            caps.Categories.AddCategoryMapping(1, NewznabStandardCategory.Movies, "Movies");
-            caps.Categories.AddCategoryMapping(8, NewznabStandardCategory.MoviesSD, "Movies Cam");
-            caps.Categories.AddCategoryMapping(9, NewznabStandardCategory.MoviesSD, "Movies TS/TC");
-            caps.Categories.AddCategoryMapping(11, NewznabStandardCategory.MoviesSD, "Movies DVDRip/DVDScreener");
-            caps.Categories.AddCategoryMapping(12, NewznabStandardCategory.MoviesDVD, "Movies DVD-R");
-            caps.Categories.AddCategoryMapping(13, NewznabStandardCategory.MoviesBluRay, "Movies Bluray");
-            caps.Categories.AddCategoryMapping(14, NewznabStandardCategory.MoviesHD, "Movies BlurayRip");
-            caps.Categories.AddCategoryMapping(15, NewznabStandardCategory.Movies, "Movies Boxsets");
-            caps.Categories.AddCategoryMapping(29, NewznabStandardCategory.TVDocumentary, "Documentaries");
-            caps.Categories.AddCategoryMapping(47, NewznabStandardCategory.MoviesUHD, "Movies 4K");
-            caps.Categories.AddCategoryMapping(36, NewznabStandardCategory.MoviesForeign, "Movies Foreign");
-            caps.Categories.AddCategoryMapping(37, NewznabStandardCategory.MoviesWEBDL, "Movies WEBRip");
-            caps.Categories.AddCategoryMapping(43, NewznabStandardCategory.MoviesHD, "Movies HDRip");
-
-            caps.Categories.AddCategoryMapping(2, NewznabStandardCategory.TV, "TV");
-            caps.Categories.AddCategoryMapping(26, NewznabStandardCategory.TVSD, "TV Episodes");
-            caps.Categories.AddCategoryMapping(27, NewznabStandardCategory.TV, "TV Boxsets");
-            caps.Categories.AddCategoryMapping(32, NewznabStandardCategory.TVHD, "TV Episodes HD");
-            caps.Categories.AddCategoryMapping(44, NewznabStandardCategory.TVForeign, "TV Foreign");
-
-            caps.Categories.AddCategoryMapping(3, NewznabStandardCategory.PCGames, "Games");
-            caps.Categories.AddCategoryMapping(17, NewznabStandardCategory.PCGames, "Games PC");
-            caps.Categories.AddCategoryMapping(18, NewznabStandardCategory.ConsoleXBox, "Games XBOX");
-            caps.Categories.AddCategoryMapping(19, NewznabStandardCategory.ConsoleXBox360, "Games XBOX360");
-            caps.Categories.AddCategoryMapping(40, NewznabStandardCategory.ConsoleXBoxOne, "Games XBOXONE");
-            caps.Categories.AddCategoryMapping(20, NewznabStandardCategory.ConsolePS3, "Games PS2");
-            caps.Categories.AddCategoryMapping(21, NewznabStandardCategory.ConsolePS3, "Games Mac");
-            caps.Categories.AddCategoryMapping(22, NewznabStandardCategory.ConsolePSP, "Games PSP");
-            caps.Categories.AddCategoryMapping(28, NewznabStandardCategory.ConsoleWii, "Games Wii");
-            caps.Categories.AddCategoryMapping(30, NewznabStandardCategory.ConsoleNDS, "Games Nintendo DS");
-            caps.Categories.AddCategoryMapping(39, NewznabStandardCategory.ConsolePS4, "Games PS4");
-            caps.Categories.AddCategoryMapping(42, NewznabStandardCategory.PCMac, "Games Mac");
-            caps.Categories.AddCategoryMapping(48, NewznabStandardCategory.ConsoleOther, "Games Nintendo Switch");
-
-            caps.Categories.AddCategoryMapping(4, NewznabStandardCategory.Audio, "Music");
-            caps.Categories.AddCategoryMapping(16, NewznabStandardCategory.AudioVideo, "Music videos");
-            caps.Categories.AddCategoryMapping(31, NewznabStandardCategory.Audio, "Audio");
-
-            caps.Categories.AddCategoryMapping(7, NewznabStandardCategory.TV, "Animation");
-            caps.Categories.AddCategoryMapping(34, NewznabStandardCategory.TVAnime, "TV Anime");
-            caps.Categories.AddCategoryMapping(35, NewznabStandardCategory.TV, "TV Cartoons");
-
-            caps.Categories.AddCategoryMapping(5, NewznabStandardCategory.Books, "Books");
-            caps.Categories.AddCategoryMapping(45, NewznabStandardCategory.BooksEBook, "Books EBooks");
-            caps.Categories.AddCategoryMapping(46, NewznabStandardCategory.BooksComics, "Books Comics");
-
-            caps.Categories.AddCategoryMapping(6, NewznabStandardCategory.PC, "Apps");
-            caps.Categories.AddCategoryMapping(23, NewznabStandardCategory.PCISO, "PC ISO");
-            caps.Categories.AddCategoryMapping(24, NewznabStandardCategory.PCMac, "PC Mac");
-            caps.Categories.AddCategoryMapping(25, NewznabStandardCategory.PCMobileOther, "PC Mobile");
-            caps.Categories.AddCategoryMapping(33, NewznabStandardCategory.PC0day, "PC 0-day");
-            caps.Categories.AddCategoryMapping(38, NewznabStandardCategory.Other, "Education");
-
-            return caps;
         }
     }
 

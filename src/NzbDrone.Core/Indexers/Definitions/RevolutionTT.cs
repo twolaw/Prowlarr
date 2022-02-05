@@ -31,7 +31,6 @@ namespace NzbDrone.Core.Indexers.Definitions
         private string LoginUrl => Settings.BaseUrl + "takelogin.php";
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
         public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
-        public override IndexerCapabilities Capabilities => SetCapabilities();
 
         public RevolutionTT(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)
@@ -92,64 +91,6 @@ namespace NzbDrone.Core.Indexers.Definitions
             }
 
             return false;
-        }
-
-        private IndexerCapabilities SetCapabilities()
-        {
-            var caps = new IndexerCapabilities
-            {
-                TvSearchParams = new List<TvSearchParam>
-                       {
-                           TvSearchParam.Q, TvSearchParam.Season, TvSearchParam.Ep
-                       },
-                MovieSearchParams = new List<MovieSearchParam>
-                       {
-                           MovieSearchParam.Q, MovieSearchParam.ImdbId
-                       },
-                MusicSearchParams = new List<MusicSearchParam>
-                       {
-                           MusicSearchParam.Q
-                       },
-                BookSearchParams = new List<BookSearchParam>
-                       {
-                           BookSearchParam.Q
-                       }
-            };
-
-            caps.Categories.AddCategoryMapping("23", NewznabStandardCategory.TVAnime);
-            caps.Categories.AddCategoryMapping("22", NewznabStandardCategory.PC0day);
-            caps.Categories.AddCategoryMapping("1", NewznabStandardCategory.PCISO);
-            caps.Categories.AddCategoryMapping("36", NewznabStandardCategory.Books);
-            caps.Categories.AddCategoryMapping("36", NewznabStandardCategory.BooksEBook);
-            caps.Categories.AddCategoryMapping("4", NewznabStandardCategory.PCGames);
-            caps.Categories.AddCategoryMapping("21", NewznabStandardCategory.PCGames);
-            caps.Categories.AddCategoryMapping("16", NewznabStandardCategory.ConsolePS3);
-            caps.Categories.AddCategoryMapping("40", NewznabStandardCategory.ConsoleWii);
-            caps.Categories.AddCategoryMapping("39", NewznabStandardCategory.ConsoleXBox360);
-            caps.Categories.AddCategoryMapping("35", NewznabStandardCategory.ConsoleNDS);
-            caps.Categories.AddCategoryMapping("34", NewznabStandardCategory.ConsolePSP);
-            caps.Categories.AddCategoryMapping("2", NewznabStandardCategory.PCMac);
-            caps.Categories.AddCategoryMapping("10", NewznabStandardCategory.MoviesBluRay);
-            caps.Categories.AddCategoryMapping("20", NewznabStandardCategory.MoviesDVD);
-            caps.Categories.AddCategoryMapping("12", NewznabStandardCategory.MoviesHD);
-            caps.Categories.AddCategoryMapping("44", NewznabStandardCategory.MoviesOther);
-            caps.Categories.AddCategoryMapping("11", NewznabStandardCategory.MoviesSD);
-            caps.Categories.AddCategoryMapping("19", NewznabStandardCategory.MoviesSD);
-            caps.Categories.AddCategoryMapping("6", NewznabStandardCategory.Audio);
-            caps.Categories.AddCategoryMapping("8", NewznabStandardCategory.AudioLossless);
-            caps.Categories.AddCategoryMapping("46", NewznabStandardCategory.AudioOther);
-            caps.Categories.AddCategoryMapping("29", NewznabStandardCategory.AudioVideo);
-            caps.Categories.AddCategoryMapping("43", NewznabStandardCategory.TVOther);
-            caps.Categories.AddCategoryMapping("42", NewznabStandardCategory.TVHD);
-            caps.Categories.AddCategoryMapping("45", NewznabStandardCategory.TVOther);
-            caps.Categories.AddCategoryMapping("41", NewznabStandardCategory.TVSD);
-            caps.Categories.AddCategoryMapping("7", NewznabStandardCategory.TVSD);
-            caps.Categories.AddCategoryMapping("9", NewznabStandardCategory.XXX);
-            caps.Categories.AddCategoryMapping("49", NewznabStandardCategory.XXX);
-            caps.Categories.AddCategoryMapping("47", NewznabStandardCategory.XXXDVD);
-            caps.Categories.AddCategoryMapping("48", NewznabStandardCategory.XXX);
-
-            return caps;
         }
     }
 

@@ -28,7 +28,6 @@ namespace NzbDrone.Core.Indexers.Definitions
         public override string Description => "Superbits is a SWEDISH Private Torrent Tracker for MOVIES / TV / GENERAL";
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
         public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
-        public override IndexerCapabilities Capabilities => SetCapabilities();
 
         public SuperBits(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)
@@ -48,57 +47,6 @@ namespace NzbDrone.Core.Indexers.Definitions
         protected override IDictionary<string, string> GetCookies()
         {
             return CookieUtil.CookieHeaderToDictionary(Settings.Cookie);
-        }
-
-        private IndexerCapabilities SetCapabilities()
-        {
-            var caps = new IndexerCapabilities
-            {
-                TvSearchParams = new List<TvSearchParam>
-                       {
-                           TvSearchParam.Q, TvSearchParam.Season, TvSearchParam.Ep
-                       },
-                MovieSearchParams = new List<MovieSearchParam>
-                       {
-                           MovieSearchParam.Q, MovieSearchParam.ImdbId
-                       },
-                MusicSearchParams = new List<MusicSearchParam>
-                       {
-                           MusicSearchParam.Q
-                       },
-                BookSearchParams = new List<BookSearchParam>
-                       {
-                           BookSearchParam.Q
-                       }
-            };
-
-            caps.Categories.AddCategoryMapping(1, NewznabStandardCategory.MoviesDVD, "DVD-R Swesub");
-            caps.Categories.AddCategoryMapping(2, NewznabStandardCategory.TV, "DVD-R TV");
-            caps.Categories.AddCategoryMapping(3, NewznabStandardCategory.BooksEBook, "eBok");
-            caps.Categories.AddCategoryMapping(4, NewznabStandardCategory.MoviesHD, "Film 1080");
-            caps.Categories.AddCategoryMapping(5, NewznabStandardCategory.Movies3D, "Film 3D");
-            caps.Categories.AddCategoryMapping(6, NewznabStandardCategory.MoviesHD, "Film 720");
-            caps.Categories.AddCategoryMapping(7, NewznabStandardCategory.MoviesBluRay, "Film Bluray");
-            caps.Categories.AddCategoryMapping(8, NewznabStandardCategory.TV, "Svensk TV");
-            caps.Categories.AddCategoryMapping(9, NewznabStandardCategory.AudioAudiobook, "Ljudböcker");
-            caps.Categories.AddCategoryMapping(10, NewznabStandardCategory.AudioVideo, "Musikvideos");
-            caps.Categories.AddCategoryMapping(11, NewznabStandardCategory.BooksMags, "E-tidningar");
-            caps.Categories.AddCategoryMapping(12, NewznabStandardCategory.Audio, "Musik");
-            caps.Categories.AddCategoryMapping(13, NewznabStandardCategory.Other, "Omslag");
-            caps.Categories.AddCategoryMapping(14, NewznabStandardCategory.Other, "Övrigt");
-            caps.Categories.AddCategoryMapping(15, NewznabStandardCategory.PCGames, "PC-Spel");
-            caps.Categories.AddCategoryMapping(16, NewznabStandardCategory.PC0day, "Program");
-            caps.Categories.AddCategoryMapping(17, NewznabStandardCategory.ConsolePS3, "PS3");
-            caps.Categories.AddCategoryMapping(18, NewznabStandardCategory.TV, "TV");
-            caps.Categories.AddCategoryMapping(19, NewznabStandardCategory.ConsoleWii, "Wii");
-            caps.Categories.AddCategoryMapping(20, NewznabStandardCategory.ConsoleXBox, "Xbox");
-            caps.Categories.AddCategoryMapping(21, NewznabStandardCategory.MoviesOther, "Xvid");
-            caps.Categories.AddCategoryMapping(22, NewznabStandardCategory.XXX, "XXX");
-            caps.Categories.AddCategoryMapping(24, NewznabStandardCategory.MoviesUHD, "Film 4K");
-            caps.Categories.AddCategoryMapping(26, NewznabStandardCategory.TV, "TV DK");
-            caps.Categories.AddCategoryMapping(27, NewznabStandardCategory.TV, "TV NO");
-            caps.Categories.AddCategoryMapping(28, NewznabStandardCategory.TV, "TV FI");
-            return caps;
         }
     }
 

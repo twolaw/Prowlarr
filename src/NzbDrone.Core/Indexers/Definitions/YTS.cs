@@ -31,7 +31,6 @@ namespace NzbDrone.Core.Indexers.Definitions
         public override IndexerPrivacy Privacy => IndexerPrivacy.Public;
 
         public override TimeSpan RateLimit => TimeSpan.FromSeconds(2.5);
-        public override IndexerCapabilities Capabilities => SetCapabilities();
 
         public YTS(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)
@@ -46,30 +45,6 @@ namespace NzbDrone.Core.Indexers.Definitions
         public override IParseIndexerResponse GetParser()
         {
             return new YTSParser(Settings, Capabilities.Categories);
-        }
-
-        private IndexerCapabilities SetCapabilities()
-        {
-            var caps = new IndexerCapabilities
-            {
-                TvSearchParams = new List<TvSearchParam>
-                {
-                },
-                MovieSearchParams = new List<MovieSearchParam> { MovieSearchParam.Q, MovieSearchParam.ImdbId },
-                MusicSearchParams = new List<MusicSearchParam>
-                {
-                },
-                BookSearchParams = new List<BookSearchParam>
-                {
-                }
-            };
-
-            caps.Categories.AddCategoryMapping(45, NewznabStandardCategory.MoviesHD, "Movies/x264/720p");
-            caps.Categories.AddCategoryMapping(44, NewznabStandardCategory.MoviesHD, "Movies/x264/1080p");
-            caps.Categories.AddCategoryMapping(46, NewznabStandardCategory.MoviesUHD, "Movies/x264/2160p");
-            caps.Categories.AddCategoryMapping(47, NewznabStandardCategory.Movies3D, "Movies/x264/3D");
-
-            return caps;
         }
     }
 

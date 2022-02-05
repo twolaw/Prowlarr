@@ -27,7 +27,6 @@ namespace NzbDrone.Core.Indexers.Definitions
         public override Encoding Encoding => Encoding.UTF8;
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
         public override IndexerPrivacy Privacy => IndexerPrivacy.Public;
-        public override IndexerCapabilities Capabilities => SetCapabilities();
 
         public ThePirateBay(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)
@@ -42,82 +41,6 @@ namespace NzbDrone.Core.Indexers.Definitions
         public override IParseIndexerResponse GetParser()
         {
             return new ThePirateBayParser(Capabilities.Categories, Settings);
-        }
-
-        private IndexerCapabilities SetCapabilities()
-        {
-            var caps = new IndexerCapabilities
-            {
-                TvSearchParams = new List<TvSearchParam>
-                                   {
-                                       TvSearchParam.Q, TvSearchParam.Season, TvSearchParam.Ep
-                                   },
-                MovieSearchParams = new List<MovieSearchParam>
-                                   {
-                                       MovieSearchParam.Q
-                                   },
-                MusicSearchParams = new List<MusicSearchParam>
-                                   {
-                                       MusicSearchParam.Q
-                                   },
-                BookSearchParams = new List<BookSearchParam>
-                                   {
-                                       BookSearchParam.Q
-                                   }
-            };
-
-            caps.Categories.AddCategoryMapping(100, NewznabStandardCategory.Audio, "Audio");
-            caps.Categories.AddCategoryMapping(101, NewznabStandardCategory.Audio, "Music");
-            caps.Categories.AddCategoryMapping(102, NewznabStandardCategory.AudioAudiobook, "Audio Books");
-            caps.Categories.AddCategoryMapping(103, NewznabStandardCategory.Audio, "Sound Clips");
-            caps.Categories.AddCategoryMapping(104, NewznabStandardCategory.AudioLossless, "FLAC");
-            caps.Categories.AddCategoryMapping(199, NewznabStandardCategory.AudioOther, "Audio Other");
-            caps.Categories.AddCategoryMapping(200, NewznabStandardCategory.Movies, "Video");
-            caps.Categories.AddCategoryMapping(201, NewznabStandardCategory.Movies, "Movies");
-            caps.Categories.AddCategoryMapping(202, NewznabStandardCategory.Movies, "Movies");
-            caps.Categories.AddCategoryMapping(203, NewznabStandardCategory.AudioVideo, "Music Videos");
-            caps.Categories.AddCategoryMapping(204, NewznabStandardCategory.MoviesOther, "Movie Clips");
-            caps.Categories.AddCategoryMapping(205, NewznabStandardCategory.TV, "TV");
-            caps.Categories.AddCategoryMapping(206, NewznabStandardCategory.TVOther, "Handheld");
-            caps.Categories.AddCategoryMapping(207, NewznabStandardCategory.MoviesHD, "HD - Movies");
-            caps.Categories.AddCategoryMapping(208, NewznabStandardCategory.TVHD, "HD - TV shows");
-            caps.Categories.AddCategoryMapping(209, NewznabStandardCategory.Movies3D, "3D");
-            caps.Categories.AddCategoryMapping(299, NewznabStandardCategory.MoviesOther, "Video Other");
-            caps.Categories.AddCategoryMapping(300, NewznabStandardCategory.PC, "Applications");
-            caps.Categories.AddCategoryMapping(301, NewznabStandardCategory.PC, "Windows");
-            caps.Categories.AddCategoryMapping(302, NewznabStandardCategory.PCMac, "Mac");
-            caps.Categories.AddCategoryMapping(303, NewznabStandardCategory.PC, "UNIX");
-            caps.Categories.AddCategoryMapping(304, NewznabStandardCategory.PCMobileOther, "Handheld");
-            caps.Categories.AddCategoryMapping(305, NewznabStandardCategory.PCMobileiOS, "IOS (iPad/iPhone)");
-            caps.Categories.AddCategoryMapping(306, NewznabStandardCategory.PCMobileAndroid, "Android");
-            caps.Categories.AddCategoryMapping(399, NewznabStandardCategory.PC, "Other OS");
-            caps.Categories.AddCategoryMapping(400, NewznabStandardCategory.Console, "Games");
-            caps.Categories.AddCategoryMapping(401, NewznabStandardCategory.PCGames, "PC");
-            caps.Categories.AddCategoryMapping(402, NewznabStandardCategory.PCMac, "Mac");
-            caps.Categories.AddCategoryMapping(403, NewznabStandardCategory.ConsolePS4, "PSx");
-            caps.Categories.AddCategoryMapping(404, NewznabStandardCategory.ConsoleXBox, "XBOX360");
-            caps.Categories.AddCategoryMapping(405, NewznabStandardCategory.ConsoleWii, "Wii");
-            caps.Categories.AddCategoryMapping(406, NewznabStandardCategory.ConsoleOther, "Handheld");
-            caps.Categories.AddCategoryMapping(407, NewznabStandardCategory.ConsoleOther, "IOS (iPad/iPhone)");
-            caps.Categories.AddCategoryMapping(408, NewznabStandardCategory.ConsoleOther, "Android");
-            caps.Categories.AddCategoryMapping(499, NewznabStandardCategory.ConsoleOther, "Games Other");
-            caps.Categories.AddCategoryMapping(500, NewznabStandardCategory.XXX, "Porn");
-            caps.Categories.AddCategoryMapping(501, NewznabStandardCategory.XXX, "Movies");
-            caps.Categories.AddCategoryMapping(502, NewznabStandardCategory.XXXDVD, "Movies DVDR");
-            caps.Categories.AddCategoryMapping(503, NewznabStandardCategory.XXXImageSet, "Pictures");
-            caps.Categories.AddCategoryMapping(504, NewznabStandardCategory.XXX, "Games");
-            caps.Categories.AddCategoryMapping(505, NewznabStandardCategory.XXX, "HD - Movies");
-            caps.Categories.AddCategoryMapping(506, NewznabStandardCategory.XXX, "Movie Clips");
-            caps.Categories.AddCategoryMapping(599, NewznabStandardCategory.XXXOther, "Porn other");
-            caps.Categories.AddCategoryMapping(600, NewznabStandardCategory.Other, "Other");
-            caps.Categories.AddCategoryMapping(601, NewznabStandardCategory.Books, "E-books");
-            caps.Categories.AddCategoryMapping(602, NewznabStandardCategory.BooksComics, "Comics");
-            caps.Categories.AddCategoryMapping(603, NewznabStandardCategory.Books, "Pictures");
-            caps.Categories.AddCategoryMapping(604, NewznabStandardCategory.Books, "Covers");
-            caps.Categories.AddCategoryMapping(605, NewznabStandardCategory.Books, "Physibles");
-            caps.Categories.AddCategoryMapping(699, NewznabStandardCategory.BooksOther, "Other Other");
-
-            return caps;
         }
     }
 

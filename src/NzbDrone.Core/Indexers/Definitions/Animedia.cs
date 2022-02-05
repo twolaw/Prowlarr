@@ -28,7 +28,6 @@ namespace NzbDrone.Core.Indexers.Definitions
         public override Encoding Encoding => Encoding.UTF8;
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
         public override IndexerPrivacy Privacy => IndexerPrivacy.Public;
-        public override IndexerCapabilities Capabilities => SetCapabilities();
 
         public Animedia(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)
@@ -43,26 +42,6 @@ namespace NzbDrone.Core.Indexers.Definitions
         public override IParseIndexerResponse GetParser()
         {
             return new AnimediaParser(Settings, Capabilities.Categories) { HttpClient = _httpClient, Logger = _logger };
-        }
-
-        private IndexerCapabilities SetCapabilities()
-        {
-            var caps = new IndexerCapabilities
-            {
-                TvSearchParams = new List<TvSearchParam>
-                                   {
-                                       TvSearchParam.Q, TvSearchParam.Season, TvSearchParam.Ep
-                                   },
-                MovieSearchParams = new List<MovieSearchParam>
-                                   {
-                                       MovieSearchParam.Q
-                                   }
-            };
-            caps.Categories.AddCategoryMapping(1, NewznabStandardCategory.TVAnime, "TV Anime");
-            caps.Categories.AddCategoryMapping(2, NewznabStandardCategory.TVAnime, "OVA/ONA/Special");
-            caps.Categories.AddCategoryMapping(3, NewznabStandardCategory.TV, "Dorama");
-            caps.Categories.AddCategoryMapping(4, NewznabStandardCategory.Movies, "Movies");
-            return caps;
         }
     }
 

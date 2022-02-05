@@ -32,7 +32,6 @@ namespace NzbDrone.Core.Indexers.Definitions
         public override Encoding Encoding => Encoding.UTF8;
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
         public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
-        public override IndexerCapabilities Capabilities => SetCapabilities();
 
         public BB(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)
@@ -111,50 +110,6 @@ namespace NzbDrone.Core.Indexers.Definitions
             }
 
             return false;
-        }
-
-        private IndexerCapabilities SetCapabilities()
-        {
-            var caps = new IndexerCapabilities
-            {
-                TvSearchParams = new List<TvSearchParam>
-                                   {
-                                       TvSearchParam.Q, TvSearchParam.Season, TvSearchParam.Ep
-                                   },
-                MovieSearchParams = new List<MovieSearchParam>
-                                   {
-                                       MovieSearchParam.Q
-                                   },
-                MusicSearchParams = new List<MusicSearchParam>
-                                   {
-                                       MusicSearchParam.Q
-                                   },
-                BookSearchParams = new List<BookSearchParam>
-                                   {
-                                       BookSearchParam.Q
-                                   }
-            };
-
-            caps.Categories.AddCategoryMapping(1, NewznabStandardCategory.Audio);
-            caps.Categories.AddCategoryMapping(1, NewznabStandardCategory.AudioMP3);
-            caps.Categories.AddCategoryMapping(1, NewznabStandardCategory.AudioLossless);
-            caps.Categories.AddCategoryMapping(2, NewznabStandardCategory.PC);
-            caps.Categories.AddCategoryMapping(3, NewznabStandardCategory.BooksEBook);
-            caps.Categories.AddCategoryMapping(4, NewznabStandardCategory.AudioAudiobook);
-            caps.Categories.AddCategoryMapping(5, NewznabStandardCategory.Other);
-            caps.Categories.AddCategoryMapping(6, NewznabStandardCategory.BooksMags);
-            caps.Categories.AddCategoryMapping(7, NewznabStandardCategory.BooksComics);
-            caps.Categories.AddCategoryMapping(8, NewznabStandardCategory.TVAnime);
-            caps.Categories.AddCategoryMapping(9, NewznabStandardCategory.Movies);
-            caps.Categories.AddCategoryMapping(10, NewznabStandardCategory.TVHD);
-            caps.Categories.AddCategoryMapping(10, NewznabStandardCategory.TVSD);
-            caps.Categories.AddCategoryMapping(10, NewznabStandardCategory.TV);
-            caps.Categories.AddCategoryMapping(11, NewznabStandardCategory.PCGames);
-            caps.Categories.AddCategoryMapping(12, NewznabStandardCategory.Console);
-            caps.Categories.AddCategoryMapping(13, NewznabStandardCategory.Other);
-            caps.Categories.AddCategoryMapping(14, NewznabStandardCategory.Other);
-
-            return caps;
         }
     }
 

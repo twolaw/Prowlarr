@@ -20,7 +20,6 @@ namespace NzbDrone.Core.Indexers.Headphones
         public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
         public override string[] IndexerUrls => new string[] { "https://indexer.codeshy.com" };
         public override string Description => "A Private Usenet indexer for music";
-        public override IndexerCapabilities Capabilities => SetCapabilities();
 
         public override IIndexerRequestGenerator GetRequestGenerator()
         {
@@ -74,23 +73,6 @@ namespace NzbDrone.Core.Indexers.Headphones
             }
 
             return downloadBytes;
-        }
-
-        private IndexerCapabilities SetCapabilities()
-        {
-            var caps = new IndexerCapabilities
-            {
-                MusicSearchParams = new List<MusicSearchParam>
-                       {
-                           MusicSearchParam.Q
-                       },
-            };
-
-            caps.Categories.AddCategoryMapping(3000, NewznabStandardCategory.Audio);
-            caps.Categories.AddCategoryMapping(3010, NewznabStandardCategory.AudioMP3);
-            caps.Categories.AddCategoryMapping(3040, NewznabStandardCategory.AudioLossless);
-
-            return caps;
         }
     }
 }

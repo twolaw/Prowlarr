@@ -35,7 +35,6 @@ namespace NzbDrone.Core.Indexers.Definitions
         public override Encoding Encoding => Encoding.UTF8;
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
         public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
-        public override IndexerCapabilities Capabilities => SetCapabilities();
         public override TimeSpan RateLimit => TimeSpan.FromSeconds(5);
 
         public TVVault(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
@@ -106,32 +105,6 @@ namespace NzbDrone.Core.Indexers.Definitions
             }
 
             return false;
-        }
-
-        private IndexerCapabilities SetCapabilities()
-        {
-            var caps = new IndexerCapabilities
-            {
-                TvSearchParams = new List<TvSearchParam>
-                {
-                    TvSearchParam.Q, TvSearchParam.Season, TvSearchParam.Ep, TvSearchParam.ImdbId
-                },
-                MovieSearchParams = new List<MovieSearchParam>
-                {
-                    MovieSearchParam.Q, MovieSearchParam.ImdbId
-                },
-                Flags = new List<IndexerFlag>
-                {
-                    IndexerFlag.FreeLeech
-                }
-            };
-
-            caps.Categories.AddCategoryMapping(1, NewznabStandardCategory.TV);
-            caps.Categories.AddCategoryMapping(2, NewznabStandardCategory.Movies);
-            caps.Categories.AddCategoryMapping(3, NewznabStandardCategory.TVHD);
-            caps.Categories.AddCategoryMapping(4, NewznabStandardCategory.TVSD);
-
-            return caps;
         }
     }
 

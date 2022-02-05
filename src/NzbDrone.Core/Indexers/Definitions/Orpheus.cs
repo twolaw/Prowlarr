@@ -20,31 +20,6 @@ namespace NzbDrone.Core.Indexers.Definitions
         {
         }
 
-        protected override IndexerCapabilities SetCapabilities()
-        {
-            var caps = new IndexerCapabilities
-            {
-                MusicSearchParams = new List<MusicSearchParam>
-                       {
-                           MusicSearchParam.Q, MusicSearchParam.Album, MusicSearchParam.Artist, MusicSearchParam.Label, MusicSearchParam.Year
-                       },
-                BookSearchParams = new List<BookSearchParam>
-                       {
-                           BookSearchParam.Q
-                       }
-            };
-
-            caps.Categories.AddCategoryMapping(1, NewznabStandardCategory.Audio, "Music");
-            caps.Categories.AddCategoryMapping(2, NewznabStandardCategory.PC, "Applications");
-            caps.Categories.AddCategoryMapping(3, NewznabStandardCategory.Books, "E-Books");
-            caps.Categories.AddCategoryMapping(4, NewznabStandardCategory.AudioAudiobook, "Audiobooks");
-            caps.Categories.AddCategoryMapping(5, NewznabStandardCategory.Other, "E-Learning Videos");
-            caps.Categories.AddCategoryMapping(6, NewznabStandardCategory.Other, "Comedy");
-            caps.Categories.AddCategoryMapping(7, NewznabStandardCategory.Books, "Comics");
-
-            return caps;
-        }
-
         public override IParseIndexerResponse GetParser()
         {
             return new OrpheusParser(Settings, Capabilities);

@@ -30,7 +30,6 @@ public class MoreThanTV : TorrentIndexerBase<MoreThanTVSettings>
     public override string Description => "Private torrent tracker for TV / MOVIES";
     public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
     public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
-    public override IndexerCapabilities Capabilities => SetCapabilities();
     public override bool FollowRedirect => true;
 
     public MoreThanTV(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
@@ -46,26 +45,6 @@ public class MoreThanTV : TorrentIndexerBase<MoreThanTVSettings>
         {
             Settings = Settings
         };
-
-    private IndexerCapabilities SetCapabilities()
-        {
-            var caps = new IndexerCapabilities
-            {
-                TvSearchParams = new List<TvSearchParam>
-                                   {
-                                       TvSearchParam.Q, TvSearchParam.Season, TvSearchParam.Ep
-                                   },
-                MovieSearchParams = new List<MovieSearchParam>
-                                   {
-                                       MovieSearchParam.Q
-                                   }
-            };
-
-            caps.Categories.AddCategoryMapping(1, NewznabStandardCategory.Movies, "Movies");
-            caps.Categories.AddCategoryMapping(2, NewznabStandardCategory.TV, "TV");
-
-            return caps;
-        }
 
     protected override IDictionary<string, string> GetCookies()
     {

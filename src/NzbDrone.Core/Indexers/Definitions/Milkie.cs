@@ -25,7 +25,6 @@ namespace NzbDrone.Core.Indexers.Definitions
         public override string Description => "Milkie is a general tracker providing unpacked and 0day/0sec scene content.";
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
         public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
-        public override IndexerCapabilities Capabilities => SetCapabilities();
 
         public Milkie(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)
@@ -40,38 +39,6 @@ namespace NzbDrone.Core.Indexers.Definitions
         public override IParseIndexerResponse GetParser()
         {
             return new MilkieParser(Settings, Capabilities.Categories);
-        }
-
-        private IndexerCapabilities SetCapabilities()
-        {
-            var caps = new IndexerCapabilities
-            {
-                TvSearchParams = new List<TvSearchParam>
-                       {
-                           TvSearchParam.Q, TvSearchParam.Season, TvSearchParam.Ep
-                       },
-                MovieSearchParams = new List<MovieSearchParam>
-                       {
-                           MovieSearchParam.Q
-                       },
-                MusicSearchParams = new List<MusicSearchParam>
-                       {
-                           MusicSearchParam.Q
-                       },
-                BookSearchParams = new List<BookSearchParam>
-                       {
-                           BookSearchParam.Q
-                       }
-            };
-
-            caps.Categories.AddCategoryMapping("1", NewznabStandardCategory.Movies, "Movies");
-            caps.Categories.AddCategoryMapping("2", NewznabStandardCategory.TV, "TV");
-            caps.Categories.AddCategoryMapping("3", NewznabStandardCategory.Audio, "Music");
-            caps.Categories.AddCategoryMapping("4", NewznabStandardCategory.PCGames, "Games");
-            caps.Categories.AddCategoryMapping("5", NewznabStandardCategory.Books, "Ebook");
-            caps.Categories.AddCategoryMapping("6", NewznabStandardCategory.PC, "Apps");
-            caps.Categories.AddCategoryMapping("7", NewznabStandardCategory.XXX, "Adult");
-            return caps;
         }
     }
 
