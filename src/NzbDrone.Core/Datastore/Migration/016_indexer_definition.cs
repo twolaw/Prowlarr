@@ -15,6 +15,7 @@ namespace NzbDrone.Core.Datastore.Migration
                 .AddColumn("DefinitionFile").AsString().Nullable();
 
             Execute.WithConnection(MigrateCardigannDefinitions);
+            Execute.WithConnection(MigrateCardigannDefinitions);
         }
 
         private void MigrateCardigannDefinitions(IDbConnection conn, IDbTransaction tran)
@@ -22,7 +23,7 @@ namespace NzbDrone.Core.Datastore.Migration
             using (var cmd = conn.CreateCommand())
             {
                 cmd.Transaction = tran;
-                cmd.CommandText = "SELECT \"Id\", \"Settings\" FROM \"Indexers\" WHERE \"Implementation\" = 'Cardigann'";
+                cmd.CommandText = "SELECT \"Id\", \"Settings\", \"Implementation\", \"ConfigContract\" FROM \"Indexers\" WHERE \"Implementation\" = 'Cardigann'";
 
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -30,26 +31,35 @@ namespace NzbDrone.Core.Datastore.Migration
                     {
                         var id = reader.GetInt32(0);
                         var settings = reader.GetString(1);
-                        if (!string.IsNullOrWhiteSpace(settings))
+                        var implementation = reader.GetString(2);
+                        var configContract = reader.GetString(3);
+                        var defFile = implementation.ToLowerInvariant();
+
+                        if (implementation == "cardigann")
                         {
-                            var jsonObject = STJson.Deserialize<JsonElement>(settings);
-
-                            var defFile = string.Empty;
-
-                            if (jsonObject.TryGetProperty("definitionFile", out JsonElement jsonDef))
+                            if (!string.IsNullOrWhiteSpace(settings))
                             {
-                                defFile = jsonDef.GetString();
-                            }
+                                var jsonObject = STJson.Deserialize<JsonElement>(settings);
 
-                            settings = jsonObject.ToJson();
-                            using (var updateCmd = conn.CreateCommand())
-                            {
-                                updateCmd.Transaction = tran;
-                                updateCmd.CommandText = "UPDATE \"Indexers\" SET \"DefinitionFile\" = ? WHERE \"Id\" = ?";
-                                updateCmd.AddParameter(defFile);
-                                updateCmd.AddParameter(id);
-                                updateCmd.ExecuteNonQuery();
+                                if (jsonObject.TryGetProperty("definitionFile", out JsonElement jsonDef))
+                                {
+                                    defFile = jsonDef.GetString();
+                                }
                             }
+                        }
+                        else if (configContract == "AvistazSettings")
+                        {
+                            implementation = "Avistaz";
+                        }
+
+                        using (var updateCmd = conn.CreateCommand())
+                        {
+                            updateCmd.Transaction = tran;
+                            updateCmd.CommandText = "UPDATE \"Indexers\" SET \"DefinitionFile\" = ?, \"Implemenation\" = ? WHERE \"Id\" = ?";
+                            updateCmd.AddParameter(defFile);
+                            updateCmd.AddParameter(implementation);
+                            updateCmd.AddParameter(id);
+                            updateCmd.ExecuteNonQuery();
                         }
                     }
                 }

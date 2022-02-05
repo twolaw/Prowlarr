@@ -11,18 +11,21 @@ using NzbDrone.Core.Messaging.Events;
 
 namespace NzbDrone.Core.Indexers.Definitions.Avistaz
 {
-    public abstract class AvistazBase : TorrentIndexerBase<AvistazSettings>
+    public class Avistaz : TorrentIndexerBase<AvistazSettings>
     {
+        public override string Name => "Avistaz";
+        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
         public override string[] IndexerUrls => new string[] { "" };
         protected virtual string LoginUrl => Settings.BaseUrl + "api/v1/jackett/auth";
+        public override string Description => "";
         public override bool SupportsRss => true;
         public override bool SupportsSearch => true;
         public override int PageSize => 50;
 
         private IIndexerRepository _indexerRepository;
 
-        public AvistazBase(IIndexerRepository indexerRepository,
+        public Avistaz(IIndexerRepository indexerRepository,
                        IIndexerHttpClient httpClient,
                        IEventAggregator eventAggregator,
                        IIndexerStatusService indexerStatusService,
