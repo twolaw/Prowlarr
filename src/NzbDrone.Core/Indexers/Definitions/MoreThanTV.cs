@@ -15,6 +15,7 @@ using NzbDrone.Common.Http;
 using NzbDrone.Core.Annotations;
 using NzbDrone.Core.Configuration;
 using NzbDrone.Core.IndexerSearch.Definitions;
+using NzbDrone.Core.IndexerVersions;
 using NzbDrone.Core.Messaging.Events;
 using NzbDrone.Core.Parser;
 using NzbDrone.Core.Parser.Model;
@@ -32,8 +33,8 @@ public class MoreThanTV : TorrentIndexerBase<MoreThanTVSettings>
     public override IndexerCapabilities Capabilities => SetCapabilities();
     public override bool FollowRedirect => true;
 
-    public MoreThanTV(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IConfigService configService, Logger logger)
-        : base(httpClient, eventAggregator, indexerStatusService, configService, logger)
+    public MoreThanTV(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
+        : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)
     {
     }
 

@@ -3,6 +3,7 @@ using NLog;
 using NzbDrone.Common.Http;
 using NzbDrone.Core.Configuration;
 using NzbDrone.Core.Indexers.Definitions.Avistaz;
+using NzbDrone.Core.IndexerVersions;
 using NzbDrone.Core.Messaging.Events;
 
 namespace NzbDrone.Core.Indexers.Definitions
@@ -14,8 +15,8 @@ namespace NzbDrone.Core.Indexers.Definitions
         public override string Description => "ExoticaZ (YourExotic) is a Private Torrent Tracker for 3X";
         public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
 
-        public ExoticaZ(IIndexerRepository indexerRepository, IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IConfigService configService, Logger logger)
-            : base(indexerRepository, httpClient, eventAggregator, indexerStatusService, configService, logger)
+        public ExoticaZ(IIndexerRepository indexerRepository, IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
+            : base(indexerRepository, httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)
         {
         }
 

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using NLog;
 using NzbDrone.Core.Configuration;
 using NzbDrone.Core.Indexers.Definitions.Avistaz;
+using NzbDrone.Core.IndexerVersions;
 using NzbDrone.Core.Messaging.Events;
 
 namespace NzbDrone.Core.Indexers.Definitions
@@ -13,8 +14,8 @@ namespace NzbDrone.Core.Indexers.Definitions
         public override string Description => "PrivateHD is a Private Torrent Tracker for HD MOVIES / TV and the sister-site of AvistaZ, CinemaZ, ExoticaZ, and AnimeTorrents";
         public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
 
-        public PrivateHD(IIndexerRepository indexerRepository, IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IConfigService configService, Logger logger)
-            : base(indexerRepository, httpClient, eventAggregator, indexerStatusService, configService, logger)
+        public PrivateHD(IIndexerRepository indexerRepository, IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
+            : base(indexerRepository, httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)
         {
         }
 

@@ -17,6 +17,7 @@ using NzbDrone.Core.Configuration;
 using NzbDrone.Core.Exceptions;
 using NzbDrone.Core.Indexers.Exceptions;
 using NzbDrone.Core.IndexerSearch.Definitions;
+using NzbDrone.Core.IndexerVersions;
 using NzbDrone.Core.Messaging.Events;
 using NzbDrone.Core.Parser;
 using NzbDrone.Core.Parser.Model;
@@ -49,8 +50,8 @@ namespace NzbDrone.Core.Indexers.Definitions
 
         private IIndexerRepository _indexerRepository;
 
-        public SpeedApp(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IConfigService configService, Logger logger, IIndexerRepository indexerRepository)
-            : base(httpClient, eventAggregator, indexerStatusService, configService, logger)
+        public SpeedApp(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger, IIndexerRepository indexerRepository)
+            : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)
         {
             _indexerRepository = indexerRepository;
         }

@@ -4,6 +4,7 @@ using System.Text;
 using NLog;
 using NzbDrone.Common.Http;
 using NzbDrone.Core.Configuration;
+using NzbDrone.Core.IndexerVersions;
 using NzbDrone.Core.Messaging.Events;
 
 namespace NzbDrone.Core.Indexers.Definitions.Xthor
@@ -23,11 +24,12 @@ namespace NzbDrone.Core.Indexers.Definitions.Xthor
         public override IndexerCapabilities Capabilities => SetCapabilities();
 
         public Xthor(IIndexerHttpClient httpClient,
-            IEventAggregator eventAggregator,
-            IIndexerStatusService indexerStatusService,
-            IConfigService configService,
-            Logger logger)
-            : base(httpClient, eventAggregator, indexerStatusService, configService, logger)
+                     IEventAggregator eventAggregator,
+                     IIndexerStatusService indexerStatusService,
+                     IIndexerDefinitionUpdateService definitionService,
+                     IConfigService configService,
+                     Logger logger)
+            : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)
         {
         }
 
