@@ -50,7 +50,10 @@ namespace NzbDrone.Core.Indexers
 
             foreach (var definition in definitions)
             {
-                MapBaseDefinition(definition);
+                if (definition.Implementation != typeof(Newznab.Newznab).Name)
+                {
+                    MapBaseDefinition(definition);
+                }
 
                 if (definition.Implementation == typeof(Cardigann.Cardigann).Name)
                 {
@@ -75,7 +78,10 @@ namespace NzbDrone.Core.Indexers
         {
             var definition = base.Get(id);
 
-            MapBaseDefinition(definition);
+            if (definition.Implementation != typeof(Newznab.Newznab).Name)
+            {
+                MapBaseDefinition(definition);
+            }
 
             if (definition.Implementation == typeof(Cardigann.Cardigann).Name)
             {

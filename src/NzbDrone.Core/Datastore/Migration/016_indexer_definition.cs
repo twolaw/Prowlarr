@@ -23,7 +23,7 @@ namespace NzbDrone.Core.Datastore.Migration
             using (var cmd = conn.CreateCommand())
             {
                 cmd.Transaction = tran;
-                cmd.CommandText = "SELECT \"Id\", \"Settings\", \"Implementation\", \"ConfigContract\" FROM \"Indexers\" WHERE \"Implementation\" = 'Cardigann'";
+                cmd.CommandText = "SELECT \"Id\", \"Settings\", \"Implementation\", \"ConfigContract\" FROM \"Indexers\"";
 
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -35,7 +35,7 @@ namespace NzbDrone.Core.Datastore.Migration
                         var configContract = reader.GetString(3);
                         var defFile = implementation.ToLowerInvariant();
 
-                        if (implementation == "cardigann")
+                        if (implementation == "Cardigann")
                         {
                             if (!string.IsNullOrWhiteSpace(settings))
                             {
@@ -55,11 +55,15 @@ namespace NzbDrone.Core.Datastore.Migration
                         {
                             implementation = "Unit3d";
                         }
+                        else if (configContract == "Newznab")
+                        {
+                            defFile = "";
+                        }
 
                         using (var updateCmd = conn.CreateCommand())
                         {
                             updateCmd.Transaction = tran;
-                            updateCmd.CommandText = "UPDATE \"Indexers\" SET \"DefinitionFile\" = ?, \"Implemenation\" = ? WHERE \"Id\" = ?";
+                            updateCmd.CommandText = "UPDATE \"Indexers\" SET \"DefinitionFile\" = ?, \"Implementation\" = ? WHERE \"Id\" = ?";
                             updateCmd.AddParameter(defFile);
                             updateCmd.AddParameter(implementation);
                             updateCmd.AddParameter(id);
