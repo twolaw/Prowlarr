@@ -50,22 +50,21 @@ namespace NzbDrone.Core.Indexers
 
             foreach (var definition in definitions)
             {
-                if (definition.Implementation != typeof(Newznab.Newznab).Name)
+                try
                 {
-                    MapBaseDefinition(definition);
-                }
+                    if (definition.Implementation != typeof(Newznab.Newznab).Name)
+                    {
+                        MapBaseDefinition(definition);
+                    }
 
-                if (definition.Implementation == typeof(Cardigann.Cardigann).Name)
-                {
-                    try
+                    if (definition.Implementation == typeof(Cardigann.Cardigann).Name)
                     {
                         MapCardigannDefinition(definition);
                     }
-                    catch
-                    {
-                        // Skip indexer if we fail in Cardigann mapping
-                        _logger.Debug("Indexer {0} has no definition", definition.Name);
-                    }
+                }
+                catch
+                {
+                    _logger.Debug("Indexer {0} has no definition", definition.Name);
                 }
 
                 filteredDefinitions.Add(definition);
@@ -78,21 +77,21 @@ namespace NzbDrone.Core.Indexers
         {
             var definition = base.Get(id);
 
-            if (definition.Implementation != typeof(Newznab.Newznab).Name)
+            try
             {
-                MapBaseDefinition(definition);
-            }
+                if (definition.Implementation != typeof(Newznab.Newznab).Name)
+                {
+                    MapBaseDefinition(definition);
+                }
 
-            if (definition.Implementation == typeof(Cardigann.Cardigann).Name)
-            {
-                try
+                if (definition.Implementation == typeof(Cardigann.Cardigann).Name)
                 {
                     MapCardigannDefinition(definition);
                 }
-                catch
-                {
-                    throw new ModelNotFoundException(typeof(IndexerDefinition), id);
-                }
+            }
+            catch
+            {
+                throw new ModelNotFoundException(typeof(IndexerDefinition), id);
             }
 
             return definition;
@@ -214,17 +213,6 @@ namespace NzbDrone.Core.Indexers
             definition.SupportsRss = provider.SupportsRss;
             definition.SupportsSearch = provider.SupportsSearch;
             definition.SupportsRedirect = provider.SupportsRedirect;
-
-            //We want to use the definition Caps and Privacy for Cardigann instead of the provider.
-            if (definition.Implementation != typeof(Cardigann.Cardigann).Name)
-            {
-                definition.IndexerUrls = provider.IndexerUrls;
-                definition.Privacy = provider.Privacy;
-                definition.Description = provider.Description;
-                definition.Encoding = provider.Encoding;
-                definition.Language = provider.Language;
-                definition.Capabilities = provider.Capabilities;
-            }
         }
 
         public List<IIndexer> Enabled(bool filterBlockedIndexers = true)
