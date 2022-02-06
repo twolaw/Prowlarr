@@ -248,6 +248,11 @@ namespace NzbDrone.Core.IndexerVersions
                 definition.Login.Method = "form";
             }
 
+            if (definition.Search == null)
+            {
+                definition.Search = new SearchBlock();
+            }
+
             if (definition.Search.Paths == null)
             {
                 definition.Search.Paths = new List<SearchPathBlock>();
