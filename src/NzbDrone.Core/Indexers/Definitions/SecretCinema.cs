@@ -26,10 +26,7 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class SecretCinema : Gazelle.Gazelle
     {
         public override string Name => "Secret Cinema";
-        public override string[] IndexerUrls => new string[] { "https://secret-cinema.pw/" };
-        public override string Description => "A tracker for rare movies.";
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
 
         public SecretCinema(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

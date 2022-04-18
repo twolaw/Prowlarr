@@ -24,12 +24,7 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class SceneHD : TorrentIndexerBase<SceneHDSettings>
     {
         public override string Name => "SceneHD";
-        public override string[] IndexerUrls => new[] { "https://scenehd.org/" };
-        public override string Description => "SceneHD is Private site for HD TV / MOVIES";
-        public override string Language => "en-US";
-        public override Encoding Encoding => Encoding.UTF8;
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
 
         public SceneHD(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

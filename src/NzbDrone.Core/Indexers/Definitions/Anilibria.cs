@@ -22,12 +22,7 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class Anilibria : TorrentIndexerBase<AnilibriaSettings>
     {
         public override string Name => "Anilibria";
-        public override string[] IndexerUrls => new string[] { "https://anilibria.tv/" };
-        public override string Description => "Anilibria is russian anime voiceover group and eponymous anime tracker.";
-        public override string Language => "ru-RU";
-        public override Encoding Encoding => Encoding.UTF8;
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Public;
 
         public Anilibria(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

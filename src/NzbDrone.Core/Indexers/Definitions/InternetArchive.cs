@@ -22,14 +22,7 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class InternetArchive : TorrentIndexerBase<InternetArchiveSettings>
     {
         public override string Name => "Internet Archive";
-
-        public override string[] IndexerUrls => new string[] { "https://archive.org/" };
-
-        public override string Description => "Internet Archive is a non-profit library of millions of free books, movies, software, music, websites, and more.";
-
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Public;
 
         public override bool FollowRedirect => true;
 

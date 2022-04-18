@@ -25,13 +25,8 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class HDSpace : TorrentIndexerBase<HDSpaceSettings>
     {
         public override string Name => "HD-Space";
-        public override string[] IndexerUrls => new string[] { "https://hd-space.org/" };
         private string LoginUrl => Settings.BaseUrl + "index.php?page=login";
-        public override string Description => "HD-Space (HDS) is a Private Torrent Tracker for HD MOVIES / TV";
-        public override string Language => "en-US";
-        public override Encoding Encoding => Encoding.UTF8;
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
 
         public HDSpace(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

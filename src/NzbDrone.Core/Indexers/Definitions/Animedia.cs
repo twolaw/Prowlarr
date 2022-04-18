@@ -22,12 +22,7 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class Animedia : TorrentIndexerBase<AnimediaSettings>
     {
         public override string Name => "Animedia";
-        public override string[] IndexerUrls => new string[] { "https://tt.animedia.tv/" };
-        public override string Description => "Animedia is russian anime voiceover group and eponymous anime tracker.";
-        public override string Language => "ru-RU";
-        public override Encoding Encoding => Encoding.UTF8;
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Public;
 
         public Animedia(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

@@ -29,12 +29,7 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class NorBits : TorrentIndexerBase<NorBitsSettings>
     {
         public override string Name => "NorBits";
-        public override string[] IndexerUrls => new string[] { "https://norbits.net/" };
-        public override string Description => "NorBits is a Norwegian Private site for MOVIES / TV / GENERAL";
-        public override string Language => "nb-NO";
-        public override Encoding Encoding => Encoding.GetEncoding("iso-8859-1");
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
 
         public NorBits(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

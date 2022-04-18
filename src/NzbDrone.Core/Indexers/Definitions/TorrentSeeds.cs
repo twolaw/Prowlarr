@@ -27,14 +27,10 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class TorrentSeeds : TorrentIndexerBase<TorrentSeedsSettings>
     {
         public override string Name => "TorrentSeeds";
-
-        public override string[] IndexerUrls => new string[] { "https://torrentseeds.org/" };
-        public override string Description => "TorrentSeeds is a Private site for MOVIES / TV / GENERAL";
         private string LoginUrl => Settings.BaseUrl + "takelogin.php";
         private string CaptchaUrl => Settings.BaseUrl + "simpleCaptcha.php?numImages=1";
         private string TokenUrl => Settings.BaseUrl + "login.php";
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
 
         public TorrentSeeds(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

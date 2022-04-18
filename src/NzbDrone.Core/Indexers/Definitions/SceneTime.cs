@@ -23,12 +23,7 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class SceneTime : TorrentIndexerBase<SceneTimeSettings>
     {
         public override string Name => "SceneTime";
-        public override string[] IndexerUrls => new[] { "https://www.scenetime.com/" };
-        public override string Description => "Always on time";
-        public override string Language => "en-US";
-        public override Encoding Encoding => Encoding.GetEncoding("iso-8859-1");
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
 
         public SceneTime(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

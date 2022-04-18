@@ -25,12 +25,8 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class AnimeTorrents : TorrentIndexerBase<AnimeTorrentsSettings>
     {
         public override string Name => "AnimeTorrents";
-
-        public override string[] IndexerUrls => new string[] { "https://animetorrents.me/" };
-        public override string Description => "Definitive source for anime and manga";
         private string LoginUrl => Settings.BaseUrl + "login.php";
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
 
         public AnimeTorrents(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

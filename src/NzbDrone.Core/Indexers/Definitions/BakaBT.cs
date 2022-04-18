@@ -27,11 +27,8 @@ namespace NzbDrone.Core.Indexers.Definitions
     {
         public override string Name => "BakaBT";
 
-        public override string[] IndexerUrls => new string[] { "https://bakabt.me/" };
-        public override string Description => "Anime Community";
         private string LoginUrl => Settings.BaseUrl + "login.php";
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
 
         public BakaBT(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

@@ -20,12 +20,7 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class ShowRSS : TorrentIndexerBase<ShowRSSSettings>
     {
         public override string Name => "ShowRSS";
-        public override string[] IndexerUrls => new string[] { "https://showrss.info/" };
-        public override string Language => "en-US";
-        public override string Description => "showRSS is a service that allows you to keep track of your favorite TV shows";
-        public override Encoding Encoding => Encoding.UTF8;
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Public;
 
         public ShowRSS(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

@@ -26,14 +26,9 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class RuTracker : TorrentIndexerBase<RuTrackerSettings>
     {
         public override string Name => "RuTracker";
-        public override string[] IndexerUrls => new string[] { "https://rutracker.org/", "https://rutracker.net/" };
 
         private string LoginUrl => Settings.BaseUrl + "forum/login.php";
-        public override string Description => "RuTracker is a Semi-Private Russian torrent site with a thriving file-sharing community";
-        public override string Language => "ru-org";
-        public override Encoding Encoding => Encoding.GetEncoding("windows-1251");
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.SemiPrivate;
 
         public RuTracker(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

@@ -22,12 +22,7 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class Shizaproject : TorrentIndexerBase<ShizaprojectSettings>
     {
         public override string Name => "ShizaProject";
-        public override string[] IndexerUrls => new string[] { "https://shiza-project.com/" };
-        public override string Description => "Shizaproject is russian anime voiceover group and eponymous anime tracker.";
-        public override string Language => "ru-RU";
-        public override Encoding Encoding => Encoding.UTF8;
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Public;
 
         public Shizaproject(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

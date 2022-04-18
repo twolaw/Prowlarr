@@ -24,12 +24,8 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class HDTorrents : TorrentIndexerBase<HDTorrentsSettings>
     {
         public override string Name => "HD-Torrents";
-
-        public override string[] IndexerUrls => new string[] { "https://hdts.ru/", "https://hd-torrents.org/" };
-        public override string Description => "HD-Torrents is a private torrent website with HD torrents and strict rules on their content.";
         private string LoginUrl => Settings.BaseUrl + "login.php";
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
 
         public HDTorrents(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

@@ -26,12 +26,8 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class ImmortalSeed : TorrentIndexerBase<ImmortalSeedSettings>
     {
         public override string Name => "ImmortalSeed";
-
-        public override string[] IndexerUrls => new string[] { "https://immortalseed.me/" };
-        public override string Description => "ImmortalSeed (iS) is a Private Torrent Tracker for MOVIES / TV / GENERAL";
         private string LoginUrl => Settings.BaseUrl + "takelogin.php";
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
 
         public ImmortalSeed(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

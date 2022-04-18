@@ -25,13 +25,8 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class PreToMe : TorrentIndexerBase<PreToMeSettings>
     {
         public override string Name => "PreToMe";
-        public override string[] IndexerUrls => new string[] { "https://pretome.info/" };
-        public override string Description => "PreToMe is a ratioless 0Day/General tracker.";
         private string LoginUrl => Settings.BaseUrl + "takelogin.php";
-        public override string Language => "en-US";
-        public override Encoding Encoding => Encoding.GetEncoding("iso-8859-1");
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
 
         public PreToMe(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

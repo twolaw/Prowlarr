@@ -14,9 +14,7 @@ namespace NzbDrone.Core.Indexers.Definitions.Avistaz
     public class Avistaz : TorrentIndexerBase<AvistazSettings>
     {
         public override string Name => "Avistaz";
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override string[] IndexerUrls => new string[] { "" };
         protected virtual string LoginUrl => Settings.BaseUrl + "api/v1/jackett/auth";
         public override string Description => "";
         public override bool SupportsRss => true;

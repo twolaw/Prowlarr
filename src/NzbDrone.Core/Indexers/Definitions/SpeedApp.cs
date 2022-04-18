@@ -30,21 +30,11 @@ namespace NzbDrone.Core.Indexers.Definitions
     {
         public override string Name => "SpeedApp.io";
 
-        public override string[] IndexerUrls => new string[] { "https://speedapp.io" };
-
         private string ApiUrl => $"{Settings.BaseUrl}/api";
 
         private string LoginUrl => $"{ApiUrl}/login";
 
-        public override string Description => "SpeedApp is a ROMANIAN Private Torrent Tracker for MOVIES / TV / GENERAL";
-
-        public override string Language => "ro-RO";
-
-        public override Encoding Encoding => Encoding.UTF8;
-
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
 
         private IIndexerRepository _indexerRepository;
 

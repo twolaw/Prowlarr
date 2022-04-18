@@ -26,12 +26,8 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class TorrentLeech : TorrentIndexerBase<TorrentLeechSettings>
     {
         public override string Name => "TorrentLeech";
-
-        public override string[] IndexerUrls => new string[] { "https://www.torrentleech.org/" };
-        public override string Description => "This is what happens when you seed";
         private string LoginUrl => Settings.BaseUrl + "user/account/login/";
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
 
         public TorrentLeech(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

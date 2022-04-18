@@ -21,12 +21,8 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class TorrentsCSV : TorrentIndexerBase<TorrentsCSVSettings>
     {
         public override string Name => "TorrentsCSV";
-        public override string[] IndexerUrls => new[] { "https://torrents-csv.ml/" };
-        public override string Language => "en-US";
-        public override string Description => "Torrents.csv is a self-hostable open source torrent search engine and database";
         public override Encoding Encoding => Encoding.UTF8;
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Public;
         public override bool SupportsRss => false;
 
         public TorrentsCSV(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)

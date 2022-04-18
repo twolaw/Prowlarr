@@ -21,12 +21,7 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class ThePirateBay : TorrentIndexerBase<ThePirateBaySettings>
     {
         public override string Name => "ThePirateBay";
-        public override string[] IndexerUrls => new string[] { "https://thepiratebay.org/" };
-        public override string Description => "Pirate Bay(TPB) is the galaxy’s most resilient Public BitTorrent site";
-        public override string Language => "en-US";
-        public override Encoding Encoding => Encoding.UTF8;
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Public;
 
         public ThePirateBay(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

@@ -26,10 +26,7 @@ namespace NzbDrone.Core.Indexers.Definitions;
 public class MoreThanTV : TorrentIndexerBase<MoreThanTVSettings>
 {
     public override string Name => "MoreThanTV";
-    public override string[] IndexerUrls => new[] { "https://www.morethantv.me/" };
-    public override string Description => "Private torrent tracker for TV / MOVIES";
     public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-    public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
     public override bool FollowRedirect => true;
 
     public MoreThanTV(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)

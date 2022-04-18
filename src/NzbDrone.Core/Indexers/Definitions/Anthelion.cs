@@ -26,13 +26,8 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class Anthelion : TorrentIndexerBase<AnthelionSettings>
     {
         public override string Name => "Anthelion";
-        public override string[] IndexerUrls => new string[] { "https://anthelion.me/" };
         private string LoginUrl => Settings.BaseUrl + "login.php";
-        public override string Description => "A movies tracker";
-        public override string Language => "en-US";
-        public override Encoding Encoding => Encoding.UTF8;
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
 
         public Anthelion(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

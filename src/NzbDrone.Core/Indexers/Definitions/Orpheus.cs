@@ -11,9 +11,6 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class Orpheus : Gazelle.Gazelle
     {
         public override string Name => "Orpheus";
-        public override string[] IndexerUrls => new string[] { "https://orpheus.network/" };
-        public override string Description => "Orpheus (APOLLO) is a Private Torrent Tracker for MUSIC";
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
 
         public Orpheus(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

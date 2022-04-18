@@ -21,22 +21,7 @@ namespace NzbDrone.Core.Indexers.Definitions
     {
         public override string Name => "TorrentDay";
 
-        public override string[] IndexerUrls => new string[]
-        {
-            "https://torrentday.cool/",
-            "https://tday.love/",
-            "https://secure.torrentday.com/",
-            "https://classic.torrentday.com/",
-            "https://www.torrentday.com/",
-            "https://torrentday.it/",
-            "https://td.findnemo.net/",
-            "https://td.getcrazy.me/",
-            "https://td.venom.global/",
-            "https://td.workisboring.net/"
-        };
-        public override string Description => "TorrentDay (TD) is a Private site for TV / MOVIES / GENERAL";
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
 
         public TorrentDay(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

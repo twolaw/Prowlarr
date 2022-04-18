@@ -27,12 +27,7 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class AnimeBytes : TorrentIndexerBase<AnimeBytesSettings>
     {
         public override string Name => "AnimeBytes";
-        public override string[] IndexerUrls => new string[] { "https://animebytes.tv/" };
-        public override string Description => "AnimeBytes (AB) is the largest private torrent tracker that specialises in anime and anime-related content.";
-        public override string Language => "en-US";
-        public override Encoding Encoding => Encoding.UTF8;
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
 
         public AnimeBytes(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

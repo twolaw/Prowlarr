@@ -25,12 +25,7 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class BitHDTV : TorrentIndexerBase<BitHDTVSettings>
     {
         public override string Name => "BitHDTV";
-        public override string[] IndexerUrls => new string[] { "https://www.bit-hdtv.com/" };
-        public override string Description => "BIT-HDTV - Home of High Definition";
-        public override string Language => "en-US";
-        public override Encoding Encoding => Encoding.GetEncoding("iso-8859-1");
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
 
         public BitHDTV(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

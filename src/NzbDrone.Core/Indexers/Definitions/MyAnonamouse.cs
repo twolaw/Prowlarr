@@ -28,11 +28,7 @@ namespace NzbDrone.Core.Indexers.Definitions
         private static readonly Regex TorrentIdRegex = new Regex(@"tor/download.php\?tid=(?<id>\d+)$");
 
         public override string Name => "MyAnonamouse";
-
-        public override string[] IndexerUrls => new string[] { "https://www.myanonamouse.net/" };
-        public override string Description => "MyAnonaMouse (MAM) is a large ebook and audiobook tracker.";
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
 
         public MyAnonamouse(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

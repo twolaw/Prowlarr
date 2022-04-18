@@ -25,11 +25,7 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class BeyondHD : TorrentIndexerBase<BeyondHDSettings>
     {
         public override string Name => "BeyondHD";
-
-        public override string[] IndexerUrls => new string[] { "https://beyond-hd.me/" };
-        public override string Description => "BeyondHD (BHD) is a Private Torrent Tracker for HD MOVIES / TV";
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
 
         public BeyondHD(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

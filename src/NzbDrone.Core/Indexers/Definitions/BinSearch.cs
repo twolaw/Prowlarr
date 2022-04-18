@@ -23,12 +23,7 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class BinSearch : UsenetIndexerBase<BinSearchSettings>
     {
         public override string Name => "BinSearch";
-        public override string[] IndexerUrls => new string[] { "https://binsearch.info/" };
-        public override string Description => "The binary Usenet search engine";
-        public override string Language => "en-US";
-        public override Encoding Encoding => Encoding.UTF8;
         public override DownloadProtocol Protocol => DownloadProtocol.Usenet;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Public;
         public override bool SupportsRss => false;
 
         public BinSearch(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, IValidateNzbs nzbValidationService, Logger logger)

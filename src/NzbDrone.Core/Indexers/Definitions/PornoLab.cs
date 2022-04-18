@@ -24,13 +24,8 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class PornoLab : TorrentIndexerBase<PornoLabSettings>
     {
         public override string Name => "PornoLab";
-        public override string[] IndexerUrls => new string[] { "https://pornolab.net/" };
         private string LoginUrl => Settings.BaseUrl + "forum/login.php";
-        public override string Description => "PornoLab is a Semi-Private Russian site for Adult content";
-        public override string Language => "ru-RU";
-        public override Encoding Encoding => Encoding.GetEncoding("windows-1251");
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.SemiPrivate;
 
         public PornoLab(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

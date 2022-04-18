@@ -20,11 +20,7 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class Milkie : TorrentIndexerBase<MilkieSettings>
     {
         public override string Name => "Milkie";
-
-        public override string[] IndexerUrls => new string[] { "https://milkie.cc/" };
-        public override string Description => "Milkie is a general tracker providing unpacked and 0day/0sec scene content.";
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
 
         public Milkie(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

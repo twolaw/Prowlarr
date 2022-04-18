@@ -11,17 +11,12 @@ namespace NzbDrone.Core.Indexers.BroadcastheNet
     public class BroadcastheNet : TorrentIndexerBase<BroadcastheNetSettings>
     {
         public override string Name => "BroadcasTheNet";
-
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
         public override bool SupportsRss => true;
         public override bool SupportsSearch => true;
         public override int PageSize => 100;
 
         public override TimeSpan RateLimit => TimeSpan.FromSeconds(5);
-
-        public override string[] IndexerUrls => new string[] { "http://api.broadcasthe.net/" };
-        public override string Description => "BroadcasTheNet (BTN) is an invite-only torrent tracker focused on TV shows";
 
         public BroadcastheNet(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

@@ -10,10 +10,7 @@ namespace NzbDrone.Core.Indexers.HDBits
     public class HDBits : TorrentIndexerBase<HDBitsSettings>
     {
         public override string Name => "HDBits";
-        public override string[] IndexerUrls => new string[] { "https://hdbits.org" };
-        public override string Description => "Best HD Tracker";
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
         public override bool SupportsRedirect => true;
 
         public override int PageSize => 30;

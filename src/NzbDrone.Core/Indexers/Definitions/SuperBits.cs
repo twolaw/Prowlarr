@@ -24,10 +24,7 @@ namespace NzbDrone.Core.Indexers.Definitions
     {
         public override string Name => "SuperBits";
 
-        public override string[] IndexerUrls => new string[] { "https://superbits.org/" };
-        public override string Description => "Superbits is a SWEDISH Private Torrent Tracker for MOVIES / TV / GENERAL";
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
 
         public SuperBits(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)

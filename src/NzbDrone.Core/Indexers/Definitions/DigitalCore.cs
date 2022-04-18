@@ -25,10 +25,7 @@ namespace NzbDrone.Core.Indexers.Definitions
     public class DigitalCore : TorrentIndexerBase<DigitalCoreSettings>
     {
         public override string Name => "DigitalCore";
-        public override string[] IndexerUrls => new string[] { "https://digitalcore.club/" };
-        public override string Description => "DigitalCore is a Private Torrent Tracker for MOVIES / TV / GENERAL";
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
-        public override IndexerPrivacy Privacy => IndexerPrivacy.Private;
 
         public DigitalCore(IIndexerHttpClient httpClient, IEventAggregator eventAggregator, IIndexerStatusService indexerStatusService, IIndexerDefinitionUpdateService definitionService, IConfigService configService, Logger logger)
             : base(httpClient, eventAggregator, indexerStatusService, definitionService, configService, logger)
