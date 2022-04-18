@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Data;
 using System.Text.Json;
+using Dapper;
 using FluentMigrator;
 using NzbDrone.Common.Serializer;
 using NzbDrone.Core.Datastore.Migration.Framework;
@@ -15,11 +17,12 @@ namespace NzbDrone.Core.Datastore.Migration
                 .AddColumn("DefinitionFile").AsString().Nullable();
 
             Execute.WithConnection(MigrateCardigannDefinitions);
-            Execute.WithConnection(MigrateCardigannDefinitions);
         }
 
         private void MigrateCardigannDefinitions(IDbConnection conn, IDbTransaction tran)
         {
+            var indexers = new List<Indexer017>();
+
             using (var cmd = conn.CreateCommand())
             {
                 cmd.Transaction = tran;
@@ -60,18 +63,25 @@ namespace NzbDrone.Core.Datastore.Migration
                             defFile = "";
                         }
 
-                        using (var updateCmd = conn.CreateCommand())
+                        indexers.Add(new Indexer017
                         {
-                            updateCmd.Transaction = tran;
-                            updateCmd.CommandText = "UPDATE \"Indexers\" SET \"DefinitionFile\" = ?, \"Implementation\" = ? WHERE \"Id\" = ?";
-                            updateCmd.AddParameter(defFile);
-                            updateCmd.AddParameter(implementation);
-                            updateCmd.AddParameter(id);
-                            updateCmd.ExecuteNonQuery();
-                        }
+                            DefinitionFile = defFile,
+                            Implementation = implementation,
+                            Id = id
+                        });
                     }
                 }
             }
+
+            var updateSql = "UPDATE \"Indexers\" SET \"DefinitionFile\" = @DefinitionFile, \"Implementation\" = @Implementation WHERE \"Id\" = @Id";
+            conn.Execute(updateSql, indexers, transaction: tran);
+        }
+
+        public class Indexer017
+        {
+            public int Id { get; set; }
+            public string DefinitionFile { get; set; }
+            public string Implementation { get; set; }
         }
     }
 }
